@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: myBlack,
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 25,horizontal: 30),
+        padding: EdgeInsets.symmetric(vertical: 20,horizontal: 30),
         child: Form(
           child: Center(
             child: Column(   
@@ -43,9 +43,20 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20),
                 Column(
                   children: [
-                    Input(label: "Email", control: controllUser,itsPass: false),
+                    Input(label: "Email", 
+                    suffixText: "@gmail.com",
+                    prefixxIcon: "../assets/images/arroba.png",
+                    control: controllUser,
+                    itsPass: false),
+
                     SizedBox(height: 20),
-                    Input(label: "Senha", control: controllPass,itsPass: true),
+
+                    Input(label: "Senha", 
+                    suffixText: "" ,
+                    prefixxIcon: "../assets/images/pass.png",
+                    control: controllPass,
+                    itsPass: true),
+
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: () {
                       
