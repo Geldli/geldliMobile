@@ -1,19 +1,41 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
 class Input extends StatelessWidget {
   String label;
   TextEditingController control;
-  Input({required this.label, required this.control, super.key});
+  bool itsPass;
+  Input({required this.label, required this.itsPass, required this.control, super.key});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        style: styleHint,
         controller: control,
+        obscureText: itsPass,
         decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding: EdgeInsets.symmetric(vertical: 1,horizontal: 20),
+        prefixIcon: Padding(
+            padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+            child: Image.asset("../assets/images/arroba.png",width: 20,fit: BoxFit.fill,) 
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: myWhite,
+            width: 2.0
+            ),
+          borderRadius: BorderRadius.circular(25),
+          ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: myWhite,
+              width: 2.0
+            ),
+          borderRadius: BorderRadius.circular(25),
+          ),
           hintText: label,
           hintStyle: styleHint,
         ),
