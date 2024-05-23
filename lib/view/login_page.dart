@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/inputs.dart';
+import 'package:flutter_application_2/model/User.dart';
+import 'package:flutter_application_2/model/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
+import 'package:flutter_application_2/view/home_page.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -17,7 +20,15 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> registerKey = GlobalKey();
   TextEditingController controllUser = TextEditingController();
   TextEditingController controllPass = TextEditingController();
+  bool isRegister = false;
 
+  void compare(User user){
+    UserList().listUsers.forEach((User u) { 
+      if(u.username == user.username && u.password == user.password){
+        isRegister=true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20,horizontal: 30),
         child: Form(
+          key: registerKey,
           child: Center(
             child: Column(   
               mainAxisAlignment: MainAxisAlignment.spaceAround,           
@@ -59,7 +71,16 @@ class _LoginPageState extends State<LoginPage> {
 
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: () {
-                      
+                      if(registerKey.currentState!.validate()){
+                        User userData = User(controllUser.text,controllPass.text);
+                        compare(userData);
+                        if(isRegister){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                        }
+                      }
+                      setState(() {
+                        
+                      });
                     }, 
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myDarkY,
@@ -81,8 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                 )
               ],
             ),
-          ),),
-        
+          ),),  
       ),
     );
   }
