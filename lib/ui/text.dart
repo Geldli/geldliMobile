@@ -18,3 +18,12 @@ var styleLink = GoogleFonts.notoSans(
   decorationColor: myDarkY,
   decorationThickness: 3
 );
+
+var styleLink2 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 13, fontWeight: 
+  FontWeight.w500,
+  decoration: TextDecoration.underline,
+  decorationColor: myWhite,
+  decorationThickness: 2
+);

@@ -7,6 +7,7 @@ import 'package:flutter_application_2/model/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:flutter_application_2/view/home_page.dart';
+import 'package:flutter_application_2/view/register_page.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -21,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController controllUser = TextEditingController();
   TextEditingController controllPass = TextEditingController();
   bool isRegister = false;
-
   void compare(User user){
     UserList().listUsers.forEach((User u) { 
       if(u.username == user.username && u.password == user.password){
@@ -57,10 +57,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Input(label: "Email", 
                     suffixText: "@gmail.com",
-                    prefixxIcon: "../assets/images/arroba.png",
+                    prefixxIcon: "../assets/images/email.png",
                     control: controllUser,
                     itsPass: false),
-
                     SizedBox(height: 20),
 
                     Input(label: "Senha", 
@@ -68,7 +67,15 @@ class _LoginPageState extends State<LoginPage> {
                     prefixxIcon: "../assets/images/pass.png",
                     control: controllPass,
                     itsPass: true),
-
+                    SizedBox(height: 5),
+                    TextButton(onPressed: () {
+                      
+                    }, 
+                    
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text("Esqueci minha senha :(",style: styleLink2)),
+                    ),
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: () {
                       if(registerKey.currentState!.validate()){
@@ -93,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text("Entrar",style: styleHint,)),
                     SizedBox(height: 20),
                     TextButton(onPressed: () {
-                      
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
                     }, child: Align(
                       alignment: Alignment.center,
                       child: Text("Ainda não tenho uma conta!",style: styleLink,)
