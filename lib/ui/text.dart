@@ -33,3 +33,15 @@ var navText = GoogleFonts.notoSans(
   fontSize: 15, fontWeight: 
   FontWeight.w600,
 );
+
+var textH1Home = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 20, fontWeight: 
+  FontWeight.w500,
+);
+
+var textDreawer = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
