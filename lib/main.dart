@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/ui/colors.dart';
-import 'package:flutter_application_2/view/home_page.dart';
-import 'package:flutter_application_2/view/login_page.dart';
+import 'package:flutter_application_2/view/controll_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: myLightY),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: ControllPage(),
     );
   }
 }

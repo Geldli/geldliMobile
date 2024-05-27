@@ -27,3 +27,9 @@ var styleLink2 = GoogleFonts.notoSans(
   decorationColor: myWhite,
   decorationThickness: 2
 );
+
+var navText = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 15, fontWeight: 
+  FontWeight.w600,
+);
