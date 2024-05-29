@@ -7,10 +7,9 @@ import 'package:flutter_application_2/ui/text.dart';
 class Input extends StatelessWidget {
   String label;
   String prefixxIcon;
-  String suffixText;
   TextEditingController control;
   bool itsPass;
-  Input({required this.label, required this.suffixText ,required this.prefixxIcon ,required this.itsPass, required this.control, super.key});
+  Input({required this.label, required this.prefixxIcon ,required this.itsPass, required this.control, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +23,6 @@ class Input extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
             child: Image.asset(prefixxIcon,width: 20,fit: BoxFit.fill,) 
         ),
-        suffixText: suffixText,
-        suffixStyle: styleHint,
         //borders styling
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/inputs.dart';
-import 'package:flutter_application_2/model/User.dart';
 import 'package:flutter_application_2/model/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
-import 'package:flutter_application_2/view/home_page.dart';
+import 'package:flutter_application_2/view/controll_page.dart';
 import 'package:flutter_application_2/view/register_page.dart';
+import 'package:provider/provider.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -18,26 +20,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> registerKey = GlobalKey();
-  TextEditingController controllUser = TextEditingController();
+  GlobalKey<FormState> loginKey = GlobalKey();
+  TextEditingController controllEmail = TextEditingController();
   TextEditingController controllPass = TextEditingController();
   bool isRegister = false;
-  void compare(User user){
-    UserList().listUsers.forEach((User u) { 
-      if(u.username == user.username && u.password == user.password){
-        isRegister=true;
-      }
+
+
+  String hashPassword(String password) {
+  var bytes = utf8.encode(password);
+  var digest = sha256.convert(bytes);
+  return digest.toString();
+  }
+
+  void invalidLogin(){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Email ou Senha Inválidos. Tente novamente!",style: TextStyle(color: myBlack)),
+      duration: Durations.short4,
+      backgroundColor: myWhite,
+      ));
+  }
+
+  void verify(String email, String pass) {
+  String password = hashPassword(pass);
+  final userList = Provider.of<UserList>(context, listen: false);
+  final authenticatedUser = userList.listUsers.firstWhere((user) => user.email == email && user.password == password);
+  if (authenticatedUser != null) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ControllPage()),
+    );
+  } else {
+    setState(() {
+      isRegister = false;
     });
+    invalidLogin();
+  }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<UserList>(builder: (context, value, child) => Scaffold(
       backgroundColor: myBlack,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20,horizontal: 30),
         child: Form(
-          key: registerKey,
+          key: loginKey,
           child: Center(
             child: Column(   
               mainAxisAlignment: MainAxisAlignment.spaceAround,           
@@ -55,19 +82,20 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20),
                 Column(
                   children: [
+
                     Input(label: "Email", 
-                    suffixText: "@gmail.com",
                     prefixxIcon: "../assets/images/email.png",
-                    control: controllUser,
+                    control: controllEmail,
                     itsPass: false),
                     SizedBox(height: 20),
 
                     Input(label: "Senha", 
-                    suffixText: "" ,
                     prefixxIcon: "../assets/images/pass.png",
                     control: controllPass,
                     itsPass: true),
                     SizedBox(height: 5),
+
+                    //esqueci minha senha
                     TextButton(onPressed: () {
                       
                     }, 
@@ -77,13 +105,14 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text("Esqueci minha senha :(",style: styleLink2)),
                     ),
                     SizedBox(height: 20),
+
+                    //login botao
+
                     ElevatedButton(onPressed: () {
-                      if(registerKey.currentState!.validate()){
-                        User userData = User(controllUser.text,controllPass.text);
-                        compare(userData);
-                        if(isRegister){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                        }
+                      if(loginKey.currentState!.validate()){
+                        String email = controllEmail.text;
+                        String pass = hashPassword(controllPass.text);
+                        verify(email,pass);
                       }
                       setState(() {
                         
@@ -98,6 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                       )
                     ),
                     child: Text("Entrar",style: styleHint,)),
+
+                    // nao tenho conta
                     SizedBox(height: 20),
                     TextButton(onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
@@ -111,6 +142,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),),  
       ),
-    );
+    ),);
   }
 }

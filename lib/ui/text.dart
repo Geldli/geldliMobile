@@ -45,3 +45,10 @@ var textDreawer = GoogleFonts.notoSans(
   fontSize: 14, fontWeight: 
   FontWeight.w400,
 );
+
+
+var tabTextStyle = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 16, fontWeight: 
+  FontWeight.w600,
+);
