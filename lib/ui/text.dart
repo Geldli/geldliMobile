@@ -52,3 +52,27 @@ var tabTextStyle = GoogleFonts.notoSans(
   fontSize: 16, fontWeight: 
   FontWeight.w600,
 );
+
+var listViewTitle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w400,
+);
+
+var listViewSubtitle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 20, fontWeight: 
+  FontWeight.w700,
+);
+
+var appBarTitle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 35, fontWeight: 
+  FontWeight.w600,
+);
+
+var appBarDesc = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 13, fontWeight: 
+  FontWeight.w500,
+);

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/model/UserList.dart';
-import 'package:flutter_application_2/view/controll_page.dart';
+import 'package:flutter_application_2/view/register_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserList(),
       builder: (context,child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ControllPage(),
+        home: RegisterPage(),
       ) 
     );
   }

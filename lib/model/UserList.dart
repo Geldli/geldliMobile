@@ -26,7 +26,6 @@ class UserList extends ChangeNotifier {
   }
 
   bool userExists(String email, String password) {
-
     return listUsers.any((user) => user.email == email && user.password == password);
   }
 
@@ -39,4 +38,15 @@ class UserList extends ChangeNotifier {
     listUsers.remove(u);
     notifyListeners();
   }
+
+  String? findUserNameByEmail(String email){
+    for(User user in listUsers){
+      if(user.email == email){
+        return user.username;
+      }
+    }
+    return null;
+  }
 }
+
+

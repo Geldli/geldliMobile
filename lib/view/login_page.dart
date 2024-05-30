@@ -23,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> loginKey = GlobalKey();
   TextEditingController controllEmail = TextEditingController();
   TextEditingController controllPass = TextEditingController();
-  bool isRegister = false;
-
 
   String hashPassword(String password) {
   var bytes = utf8.encode(password);
@@ -41,20 +39,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void verify(String email, String pass) {
-  String password = hashPassword(pass);
-  final userList = Provider.of<UserList>(context, listen: false);
-  final authenticatedUser = userList.listUsers.firstWhere((user) => user.email == email && user.password == password);
-  if (authenticatedUser != null) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ControllPage()),
-    );
-  } else {
-    setState(() {
-      isRegister = false;
-    });
+    bool userExists = Provider.of<UserList>(context, listen: false).userExists(email, pass);
+    if (userExists) {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ControllPage(email: controllEmail.text)));
+    } else {
     invalidLogin();
-  }
+    }
   }
 
   @override

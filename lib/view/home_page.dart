@@ -2,12 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_2/components/panel_user.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  String? username;
+  HomePage({
+    required this.username,
+    super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  String userName = "Bruno";
+  String userName = "";
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -34,14 +38,14 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
             Builder(
-                    builder: (context){
-                      return IconButton(onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      }, icon: Icon(Icons.more_vert,color: myWhite,));
-                    }),
-              Text("  Olá, Bruno!",style: textH1Home),
+              builder: (context){
+                return IconButton(onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                }, icon: Icon(Icons.more_vert,color: myWhite,));
+              }),
+            Text("Olá, ${widget.username}!", style: textH1Home),
             ],
-          )
+          ),
         ),
 
         // tab bar
@@ -53,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           unselectedLabelStyle: tabTextStyle,
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: myWhite
+            color: myWhite,
           ),
           tabs: [
             Tab(
@@ -125,26 +129,8 @@ class _HomePageState extends State<HomePage> {
       
     body: TabBarView(  
       children: [
-        Container(
-          child: Center(
-            child: Column(
-              children: [
-                Text('ola')
-              ],
-            ),
-          ),
-        ),
-
-        Container(
-          child: Center(
-            child: Column(
-              children: [
-                Text('ei')
-              ],
-            ),
-          ),
-        ),
-
+        PanelUserHome(),
+        Text("brua")
       ],
     ),
 
