@@ -48,7 +48,7 @@ var textDreawer = GoogleFonts.notoSans(
 
 
 var tabTextStyle = GoogleFonts.notoSans(
-  color: myBlack,
+  color: myDarkY,
   fontSize: 16, fontWeight: 
   FontWeight.w600,
 );
@@ -76,3 +76,36 @@ var appBarDesc = GoogleFonts.notoSans(
   fontSize: 13, fontWeight: 
   FontWeight.w500,
 );
+
+
+var categoryText = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 11, fontWeight: 
+  FontWeight.w700,
+);
+
+var buttomText = GoogleFonts.notoSans(
+  color: myBlue,
+  fontSize: 14, fontWeight: 
+  FontWeight.w900,
+);
+
+var formHeader = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 16, fontWeight: 
+  FontWeight.w800,
+);
+
+var hintForm = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
+
+var formTextStyle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w500,
+);
+
+

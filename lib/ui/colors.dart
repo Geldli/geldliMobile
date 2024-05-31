@@ -6,3 +6,4 @@ Color myLightBlue = Color.fromRGBO(37, 45, 56, 1);
 Color myBlue = Color.fromRGBO(38, 50, 56, 1);
 Color myDarkY = Color.fromRGBO(242, 153, 74, 1);
 Color myLightY = Color.fromRGBO(242, 201, 76, 1);
+Color myFormBackground = Color.fromRGBO(27, 36, 36, 1);

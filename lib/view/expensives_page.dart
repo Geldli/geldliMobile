@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/components/expensives%20components/panel_grid.dart';
+import 'package:flutter_application_2/components/expensives%20components/panel_list.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
@@ -30,12 +32,6 @@ class _ExpensivesPageState extends State<ExpensivesPage> {
                 "Despesa",
                 style: appBarTitle
               ),
-              SizedBox(height: 10),
-              Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                style: appBarDesc,
-                maxLines: 2,
-                ),
             ],
           ),
       ),
@@ -44,31 +40,33 @@ class _ExpensivesPageState extends State<ExpensivesPage> {
           dividerHeight: 0,
           padding: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
           labelStyle: tabTextStyle,
+          indicatorColor: myDarkY,
           unselectedLabelColor: myWhite,
           unselectedLabelStyle: tabTextStyle,
-          indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: myWhite,
-          ),
           tabs: [
             Tab(
               height: 30,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 20),
-                child: Text("Meu Painel"),
+                padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 10),
+                child: Text("Visão Geral"),
               ),
               ),
             Tab(
               height: 30,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 20),
-                child: Text("Lembretes"),
+                padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 10),
+                child: Text("Minhas Despesas"),
               ),
             ),],
         ),     
       ),
 
-
+    body: TabBarView(  
+      children: [
+        PanelGrid(),
+        PanelList(),
+      ],
+    ),
     ));
   }
 }

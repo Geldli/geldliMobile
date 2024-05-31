@@ -6,7 +6,9 @@ import 'package:flutter_application_2/model/User.dart';
 
 class UserList extends ChangeNotifier {
 
-  List<User> listUsers = [];
+  List<User> listUsers = [
+    User("001", "m", "m", "m")
+  ];
 
   List<String> getCurrentUser(int id_user){
     final currentUserIndex = listUsers.indexWhere((user) => user.idUser == id_user);

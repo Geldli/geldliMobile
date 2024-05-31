@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_final_fields, unused_field, avoid_init_to_null
 
+import 'package:flutter/material.dart';
+
 class Expensive{
 
 String _titleD = "";
 String _descriptD = "";
-DateTime? _dateToRemember = null;
+String _dateToRemember = "";
+String? _frequency = "";
 double _valueD = 0.00;
-
-Expensive(this._titleD,this._dateToRemember,this._valueD,this._descriptD);
-
+Color? _colorD = null;
  String get titleD => this._titleD;
 
  set titleD(String value) => this._titleD = value;
@@ -17,12 +18,24 @@ Expensive(this._titleD,this._dateToRemember,this._valueD,this._descriptD);
 
  set descriptD(String value) => this._descriptD = value;
 
- DateTime? get dateToRemember => this._dateToRemember;
+ String get dateToRemember => this._dateToRemember;
 
- set dateToRemember(DateTime? value) => this._dateToRemember = value;
+ set dateToRemember(String value) => this._dateToRemember = value;
+
+ String? get frequency => this._frequency;
+
+ set frequency(String? value) => this._frequency = value;
 
  double get valueD => this._valueD;
 
  set valueD(double value) => this._valueD = value;
+
+ Color? get colorD => this._colorD;
+
+ set colorD(Color? value) => this._colorD = value;
+
+Expensive(this._titleD,this._dateToRemember,this._valueD,this._descriptD,this._colorD,this._frequency);
+
+
 
 }

@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_new
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/model/UserList.dart';
-import 'package:flutter_application_2/view/register_page.dart';
+import 'package:flutter_application_2/view/expensives_page.dart';
+
 import 'package:provider/provider.dart';
 
 void main() {
@@ -15,12 +17,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserList(),
-      builder: (context,child) => const MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserList()),
+        ChangeNotifierProvider(create: (context) => ExpensiveList()),
+      ],
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RegisterPage(),
-      ) 
-    );
+        home: ExpensivesPage(),
+      ),
+      );
   }
 }
