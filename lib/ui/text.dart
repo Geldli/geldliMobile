@@ -108,4 +108,9 @@ var formTextStyle = GoogleFonts.notoSans(
   FontWeight.w500,
 );
 
+var errorStyle = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 10, fontWeight: 
+  FontWeight.w600,
+);
 

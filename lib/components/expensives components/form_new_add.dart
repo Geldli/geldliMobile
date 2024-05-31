@@ -32,8 +32,8 @@ class _FormNewState extends State<FormNew> {
   void sucess(){
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Despesa criada!",style: TextStyle(color: myBlack)),
-      duration: Durations.medium1,
-      backgroundColor: myWhite,
+      duration: Durations.long2,
+      backgroundColor: myDarkY,
       ));
   }
 
@@ -73,13 +73,14 @@ class _FormNewState extends State<FormNew> {
                     bottomLeft: Radius.circular(7),
                     bottomRight: Radius.circular(7))
                 ),
-                height: 350,
+                height: 400,
                 width: 400,
                 child: Form(
                   key: chave,
                   child: Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(height: 10),
       
@@ -100,8 +101,19 @@ class _FormNewState extends State<FormNew> {
                             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                             isCollapsed: true,
                             filled: true,
-                            fillColor: myBlack
+                            fillColor: myBlack,
+                            errorStyle: errorStyle,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: myDarkY),
+                              borderRadius: BorderRadius.circular(10),
+                            )
                           ),
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return "Por favor escolha um título!";
+                            }
+                            return null;
+                          },
                           style: formTextStyle,
                         ),
       
@@ -125,7 +137,7 @@ class _FormNewState extends State<FormNew> {
                             filled: true,
                             fillColor: myBlack
                           ),
-                           maxLines: 3,
+                          maxLines: 3,
                           style: formTextStyle,
                            
                         ),
@@ -223,6 +235,7 @@ class _FormNewState extends State<FormNew> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             ElevatedButton(onPressed: (){
+                              if(chave.currentState!.validate()){
                               String? frequencia = _controllerFrequency;
                               String titulo = controllerTitle.text;
                               String data = controllerDate.text;
@@ -230,9 +243,9 @@ class _FormNewState extends State<FormNew> {
                               String valor = controllerValue.text;
                               Expensive expensiveCreating = Expensive(titulo, data, 22.00, descricao, Colors.amber[100],frequencia);
                               addNew(expensiveCreating);
+                              Navigator.pop(context);
                               sucess();
-                              //addNew(expensiveCreating);
-                              //sucess();
+                              }
                             }, 
                             style: ElevatedButton.styleFrom(
                               backgroundColor: myDarkY

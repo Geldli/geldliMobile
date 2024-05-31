@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/model/Expensive.dart';
 import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
@@ -27,8 +28,9 @@ class _PanelListState extends State<PanelList> {
                 SizedBox(height: 15),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: ExpensiveList().listExpensives.length,
+                    itemCount: value.listExpensives.length,
                     itemBuilder: (context, index) {
+                      Expensive thisExpensive = value.listExpensives[index];
                       return Container(
                         decoration: BoxDecoration(
                           color: myBlack, 
@@ -40,16 +42,15 @@ class _PanelListState extends State<PanelList> {
                           trailing: Container(
                             padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
                             decoration: BoxDecoration(
-                              color: ExpensiveList().listExpensives[index].colorD,
+                              color: thisExpensive.colorD,
                               borderRadius: BorderRadius.circular(20)
                             ),
                             child: Text("alimentação",style: categoryText),
                           ),
-                          title: Text(ExpensiveList().listExpensives[index].titleD),
+                          title: Text(thisExpensive.titleD),
                           titleTextStyle: listViewTitle,
                         ),                                    
                       );                    
-      
                     },
                     )
                 )
