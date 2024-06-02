@@ -48,6 +48,12 @@ var textDreawer = GoogleFonts.notoSans(
 
 
 var tabTextStyle = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 16, fontWeight: 
+  FontWeight.w600,
+);
+
+var tabTextStyle2 = GoogleFonts.notoSans(
   color: myDarkY,
   fontSize: 16, fontWeight: 
   FontWeight.w600,
@@ -114,3 +120,20 @@ var errorStyle = GoogleFonts.notoSans(
   FontWeight.w600,
 );
 
+var dialogH1 = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 20, fontWeight: 
+  FontWeight.w700,
+);
+
+var dialogH2 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
+
+var dialogH3 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w500,
+);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/model/UserList.dart';
 import 'package:flutter_application_2/view/expensives_page.dart';
+import 'package:flutter_application_2/view/register_page.dart';
 
 import 'package:provider/provider.dart';
 

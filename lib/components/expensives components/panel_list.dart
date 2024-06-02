@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/components/expensives%20components/expensive_view.dart';
 import 'package:flutter_application_2/model/Expensive.dart';
 import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
@@ -39,13 +40,17 @@ class _PanelListState extends State<PanelList> {
                         padding: EdgeInsets.symmetric(vertical: 3,horizontal: 8),
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 10),   
                         child: ListTile(
+                          onTap: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => ExpensiveView(thisExpensive: thisExpensive)
+                            ),
                           trailing: Container(
                             padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
                             decoration: BoxDecoration(
-                              color: thisExpensive.colorD,
+                              color: thisExpensive.category!.colorC,
                               borderRadius: BorderRadius.circular(20)
                             ),
-                            child: Text("alimentação",style: categoryText),
+                            child: Text(thisExpensive.category!.titleC, style: categoryText),
                           ),
                           title: Text(thisExpensive.titleD),
                           titleTextStyle: listViewTitle,

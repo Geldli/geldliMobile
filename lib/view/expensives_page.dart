@@ -39,7 +39,7 @@ class _ExpensivesPageState extends State<ExpensivesPage> {
         bottom: TabBar(
           dividerHeight: 0,
           padding: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
-          labelStyle: tabTextStyle,
+          labelStyle: tabTextStyle2,
           indicatorColor: myDarkY,
           unselectedLabelColor: myWhite,
           unselectedLabelStyle: tabTextStyle,

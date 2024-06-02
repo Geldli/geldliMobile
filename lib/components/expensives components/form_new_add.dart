@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_2/model/Category.dart';
 import 'package:flutter_application_2/model/Expensive.dart';
 import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
@@ -21,6 +24,7 @@ class _FormNewState extends State<FormNew> {
   TextEditingController controllerDesc = TextEditingController();
   TextEditingController controllerDate = TextEditingController();
   TextEditingController controllerValue = TextEditingController();
+  TextEditingController controllerTag = TextEditingController();
   String? _controllerFrequency;
   List<String> frequencyItems = ["1","2","3"];
 
@@ -144,7 +148,41 @@ class _FormNewState extends State<FormNew> {
       
       
                         SizedBox(height: 10),
+                        //CATEGORIA input provisorio
+                        TextFormField(
+                          controller: controllerTag,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: myDarkY, width: 2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintText: "Categoria",
+                            hintStyle: hintForm,
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                            isCollapsed: true,
+                            filled: true,
+                            fillColor: myBlack,
+                            errorStyle: errorStyle,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: myDarkY),
+                              borderRadius: BorderRadius.circular(10),
+                            )
+                          ),
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return "Por favor escolha um título!";
+                            }
+                            return null;
+                          },
+                          style: formTextStyle,
+                        ),
       
+                        SizedBox(height: 10),
+
                         //DATE input
                         TextFormField(
                           controller: controllerDate,
@@ -236,12 +274,17 @@ class _FormNewState extends State<FormNew> {
                           children: [
                             ElevatedButton(onPressed: (){
                               if(chave.currentState!.validate()){
+                                // to do 
                               String? frequencia = _controllerFrequency;
                               String titulo = controllerTitle.text;
                               String data = controllerDate.text;
                               String descricao = controllerDesc.text;
                               String valor = controllerValue.text;
-                              Expensive expensiveCreating = Expensive(titulo, data, 22.00, descricao, Colors.amber[100],frequencia);
+                              int i = Random().nextInt(7);
+                              Color colorC = colorsForChoice[i];
+                              String titleC = controllerTag.text;
+                              Tag categoria = Tag(titleC , colorC);
+                              Expensive expensiveCreating = Expensive(titulo, data, 22.00, descricao, frequencia, categoria);
                               addNew(expensiveCreating);
                               Navigator.pop(context);
                               sucess();
