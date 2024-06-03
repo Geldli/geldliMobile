@@ -29,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: AppBar(
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.black,
                     title: Text("Configurações"),
                     actions: [
                       Icon(Icons.more_vert_rounded)
@@ -57,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: myBlack,
-                      width: 4
+                      width: 5
                     ),
                     shape: BoxShape.circle,
                     color: myDarkY
