@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_2/components/home%20components/panel_user.dart';
+import 'package:flutter_application_2/components/home_components/panel_user.dart';
 import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/model/userDatas.dart';
 import 'package:flutter_application_2/ui/colors.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/components/expensives%20components/form_new_add.dart';
+import 'package:flutter_application_2/components/expensives_components/form_new_add.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
 class PanelGrid extends StatefulWidget {
