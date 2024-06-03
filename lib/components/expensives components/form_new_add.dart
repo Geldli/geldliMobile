@@ -245,6 +245,7 @@ class _FormNewState extends State<FormNew> {
       
                         //VALUE and Tag
                         TextFormField(
+                          controller: controllerValue,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
@@ -278,13 +279,13 @@ class _FormNewState extends State<FormNew> {
                               String? frequencia = _controllerFrequency;
                               String titulo = controllerTitle.text;
                               String data = controllerDate.text;
+                              double valor = double.parse(controllerValue.text);
                               String descricao = controllerDesc.text;
-                              String valor = controllerValue.text;
                               int i = Random().nextInt(7);
                               Color colorC = colorsForChoice[i];
                               String titleC = controllerTag.text;
                               Tag categoria = Tag(titleC , colorC);
-                              Expensive expensiveCreating = Expensive(titulo, data, 22.00, descricao, frequencia, categoria);
+                              Expensive expensiveCreating = Expensive(titulo, data, valor, descricao, frequencia, categoria);
                               addNew(expensiveCreating);
                               Navigator.pop(context);
                               sucess();

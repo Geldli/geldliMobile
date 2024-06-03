@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_application_2/model/User.dart';
 
 class UserList extends ChangeNotifier {

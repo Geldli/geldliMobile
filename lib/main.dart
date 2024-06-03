@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/model/UserList.dart';
-import 'package:flutter_application_2/view/expensives_page.dart';
-import 'package:flutter_application_2/view/register_page.dart';
+import 'package:flutter_application_2/model/userDatas.dart';
+import 'package:flutter_application_2/view/drawer%20views/settings_page.dart';
 
 import 'package:provider/provider.dart';
 
@@ -22,10 +22,11 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserList()),
         ChangeNotifierProvider(create: (context) => ExpensiveList()),
+        ChangeNotifierProvider(create: (context) => UserDatas()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ExpensivesPage(),
+        home: SettingsPage(),
       ),
       );
   }
