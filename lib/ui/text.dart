@@ -7,7 +7,7 @@ var styleSpan = GoogleFonts.notoSans(color: myWhite,fontSize: 14, fontWeight: Fo
 
 var styleTitle = GoogleFonts.notoSans(
   color: myWhite,
-  fontSize: 20, 
+  fontSize: 18, 
   fontWeight: FontWeight.w500);
 
 var styleLink = GoogleFonts.notoSans(
@@ -17,4 +17,123 @@ var styleLink = GoogleFonts.notoSans(
   decoration: TextDecoration.underline,
   decorationColor: myDarkY,
   decorationThickness: 3
+);
+
+var styleLink2 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 13, fontWeight: 
+  FontWeight.w500,
+  decoration: TextDecoration.underline,
+  decorationColor: myWhite,
+  decorationThickness: 2
+);
+
+var navText = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 15, fontWeight: 
+  FontWeight.w600,
+);
+
+var textH1Home = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 20, fontWeight: 
+  FontWeight.w500,
+);
+
+var textDreawer = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
+
+
+var tabTextStyle = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 16, fontWeight: 
+  FontWeight.w600,
+);
+
+var tabTextStyle2 = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 16, fontWeight: 
+  FontWeight.w600,
+);
+
+var listViewTitle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w400,
+);
+
+var listViewSubtitle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 20, fontWeight: 
+  FontWeight.w700,
+);
+
+var appBarTitle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 35, fontWeight: 
+  FontWeight.w600,
+);
+
+var appBarDesc = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 13, fontWeight: 
+  FontWeight.w500,
+);
+
+
+var categoryText = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 11, fontWeight: 
+  FontWeight.w700,
+);
+
+var buttomText = GoogleFonts.notoSans(
+  color: myBlue,
+  fontSize: 14, fontWeight: 
+  FontWeight.w900,
+);
+
+var formHeader = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 16, fontWeight: 
+  FontWeight.w800,
+);
+
+var hintForm = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
+
+var formTextStyle = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w500,
+);
+
+var errorStyle = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 10, fontWeight: 
+  FontWeight.w600,
+);
+
+var dialogH1 = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 20, fontWeight: 
+  FontWeight.w700,
+);
+
+var dialogH2 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
+
+var dialogH3 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w500,
 );
