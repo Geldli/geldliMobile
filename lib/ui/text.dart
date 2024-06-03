@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-var styleHint = GoogleFonts.notoSans(color: myWhite,fontSize: 16, fontWeight: FontWeight.bold);
-var styleSpan = GoogleFonts.notoSans(color: myWhite,fontSize: 14, fontWeight: FontWeight.w700);
+var styleHint = GoogleFonts.notoSans(
+  color: myWhite,fontSize: 16, 
+  fontWeight: FontWeight.bold);
+
+var styleSpan = GoogleFonts.notoSans(
+  color: myWhite,fontSize: 14, 
+  fontWeight: FontWeight.w700);
 
 var styleTitle = GoogleFonts.notoSans(
   color: myWhite,
@@ -136,4 +141,30 @@ var dialogH3 = GoogleFonts.notoSans(
   color: myWhite,
   fontSize: 15, fontWeight: 
   FontWeight.w500,
+);
+
+//SETTINGS PAGE
+
+var buttomDelete = GoogleFonts.notoSans(
+  color: Color.fromRGBO(242, 74, 74, 1),
+  fontSize: 16, fontWeight: 
+  FontWeight.w900,
+);
+
+var buttomSave = GoogleFonts.notoSans(
+  color: Color.fromRGBO(77, 156, 114, 1),
+  fontSize: 16, fontWeight: 
+  FontWeight.w900,
+);
+
+var profileH2 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 15, fontWeight: 
+  FontWeight.w500,
+);
+
+var profileH3 = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
 );
