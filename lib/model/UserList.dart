@@ -11,16 +11,6 @@ class UserList extends ChangeNotifier {
     User("001", "m", "m", "m")
   ];
 
-  List<String> getCurrentUser(int id_user){
-    final currentUserIndex = listUsers.indexWhere((user) => user.idUser == id_user);
-    final currentUser = listUsers[currentUserIndex];
-    List<String> dataCurrentUser =[
-      currentUser.username,
-      currentUser.email,
-    ];
-    return dataCurrentUser;
-  }
-
   void mostrar() {
     listUsers.forEach((User u) {
       print('user: \n - ${u.username} - \n - ${u.email} - \n - ${u.idUser} - \n - ${u.password}');
@@ -37,8 +27,8 @@ class UserList extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteUser(User u) {
-    listUsers.remove(u);
+  void deleteUser(String email) {
+    listUsers.removeWhere((User user) => user.email == email);
     notifyListeners();
   }
 

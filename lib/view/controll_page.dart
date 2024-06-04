@@ -39,7 +39,7 @@ class _ControllPageState extends State<ControllPage> {
     });
 
     _pages = [
-    HomePage(username: userName ?? "oi"), 
+    HomePage(username: userName ?? "oi",email: emailUser), 
     DashboardPage(), 
     ExpensivesPage(),
     AssetsPage()

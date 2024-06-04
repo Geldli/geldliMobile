@@ -1,16 +1,20 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/ui/colors.dart';
+import 'package:flutter_application_2/ui/text.dart';
 
 class PictureProfile extends StatelessWidget {
-  const PictureProfile({super.key});
+  String name;
+  PictureProfile({required this.name,super.key});
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
       top: 100,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             height: 120,
@@ -27,7 +31,8 @@ class PictureProfile extends StatelessWidget {
             radius: 50,
           ),
           ),
-          Text("Bruno Lima",style: TextStyle(color: myWhite),)
+          Text("nome de usuário", style: profileH3),
+          Text(name, style: profileH1)
         ],
       )
       );

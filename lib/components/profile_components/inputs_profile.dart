@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/ui/colors.dart';
@@ -13,19 +13,19 @@ class InputProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         initialValue: "ana",
-        style: styleHint,
+        style: styleHintRead,
         obscureText: itsPass,
         readOnly: true,
         //styling
         decoration: InputDecoration(
         isCollapsed: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 12,horizontal: 20),
+        contentPadding: EdgeInsets.fromLTRB(20, 12, 20, 12),
         filled: true,
         fillColor: myBlue,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none
-        )
+        ),
         ),
     );
   }

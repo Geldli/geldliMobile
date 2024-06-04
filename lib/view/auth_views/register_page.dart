@@ -8,7 +8,7 @@ import 'package:flutter_application_2/model/User.dart';
 import 'package:flutter_application_2/model/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
-import 'package:flutter_application_2/view/login_page.dart';
+import 'package:flutter_application_2/view/auth_views/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 

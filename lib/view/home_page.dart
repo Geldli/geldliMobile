@@ -7,20 +7,22 @@ import 'package:flutter_application_2/model/ExpensiveList.dart';
 import 'package:flutter_application_2/model/userDatas.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
+import 'package:flutter_application_2/view/drawer_views/about_page.dart';
+import 'package:flutter_application_2/view/drawer_views/settings_page.dart';
 import 'package:provider/provider.dart';
 
 
 class HomePage extends StatefulWidget {
-  String? username;
+  String username;
+  String email;
   HomePage({
     required this.username,
+    required this.email,
     super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
-
 
 class _HomePageState extends State<HomePage> {
 
@@ -107,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                    
+                      Navigator.push(context, MaterialPageRoute(builder:(context) => SettingsPage(email: widget.email,name: widget.username)));
                     }, 
                     child: Row(
                       children: [
@@ -123,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                         elevation: 0,
                       ),
                       onPressed: () {
-                      
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage()));
                       }, 
                       child: Row(
                         children: [
