@@ -2,27 +2,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_2/model/Expensive.dart';
-import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/controller/AssetList.dart';
+import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
 
-class ExpensiveView extends StatefulWidget {
-  Expensive thisExpensive;
-  ExpensiveView({required this.thisExpensive,super.key});
+class AssetView extends StatefulWidget {
+  Asset thisAsset;
+  AssetView({required this.thisAsset, super.key});
 
   @override
-  State<ExpensiveView> createState() => _ExpensiveViewState();
+  State<AssetView> createState() => _AssetViewState();
 }
 
-class _ExpensiveViewState extends State<ExpensiveView> {
+class _AssetViewState extends State<AssetView> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpensiveList>(builder: (context, value, child) => 
+    return Consumer<AssetList>(builder: (context, value, child) => 
       AlertDialog(
         alignment: AlignmentDirectional.bottomEnd,
-        title: Text(widget.thisExpensive.titleD),
+        title: Text(widget.thisAsset.titleA),
         titleTextStyle: dialogH1,
         backgroundColor: myBlue,  
         shape: RoundedRectangleBorder(
@@ -41,7 +41,7 @@ class _ExpensiveViewState extends State<ExpensiveView> {
                   Text("Descrição:    ", style: dialogH2),
                   Flexible(
                     child: Container(
-                      child: Text(widget.thisExpensive.descriptD,
+                      child: Text(widget.thisAsset.descriptA,
                       overflow: TextOverflow.ellipsis,
                       style: dialogH3,
                       ),
@@ -56,24 +56,24 @@ class _ExpensiveViewState extends State<ExpensiveView> {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
                     decoration: BoxDecoration(
-                      color: widget.thisExpensive.category!.colorC,
+                      color: widget.thisAsset.categoryA!.colorC,
                       borderRadius: BorderRadius.circular(20)
                     ),
-                    child: Text(widget.thisExpensive.category!.titleC, style: categoryText)),
+                    child: Text(widget.thisAsset.categoryA!.titleC, style: categoryText)),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Frequência:", style: dialogH2),
-                  Text(widget.thisExpensive.frequency!, style: dialogH3),
+                  Text(widget.thisAsset.frequencyA!, style: dialogH3),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Valor em Reais:", style: dialogH2),
-                  Text('R\$ ${widget.thisExpensive.valueD.toStringAsFixed(2)}', style: dialogH3),
+                  Text('R\$ ${widget.thisAsset.valueA.toStringAsFixed(2)}', style: dialogH3),
                 ],
               )
             ],

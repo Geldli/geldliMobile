@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/components/home_components/panel_user.dart';
-import 'package:flutter_application_2/model/ExpensiveList.dart';
-import 'package:flutter_application_2/model/userDatas.dart';
+import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/controller/userDatas.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:flutter_application_2/view/drawer_views/about_page.dart';
@@ -145,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       body: TabBarView(  
         children: [
           PanelUserHome(userDatas: Provider.of<UserDatas>(context)),
-          Text("brua")
+          Text("")
         ],
       ),
       ),),

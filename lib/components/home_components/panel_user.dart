@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/model/userDatas.dart';
+import 'package:flutter_application_2/controller/userDatas.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';

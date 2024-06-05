@@ -187,3 +187,23 @@ var titleDialog = GoogleFonts.notoSans(
   fontSize: 16, fontWeight: 
   FontWeight.w700,
 );
+
+// About page
+
+var aboutText = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 14, fontWeight: 
+  FontWeight.w400,
+);
+
+var aboutTextH1 = GoogleFonts.notoSans(
+  color: myDarkY,
+  fontSize: 16, fontWeight: 
+  FontWeight.w800,
+);
+
+var headerAbout = GoogleFonts.notoSans(
+  color: myWhite,
+  fontSize: 20, fontWeight: 
+  FontWeight.w800,
+);

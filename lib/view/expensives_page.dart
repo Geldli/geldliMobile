@@ -63,7 +63,7 @@ class _ExpensivesPageState extends State<ExpensivesPage> {
 
     body: TabBarView(  
       children: [
-        PanelGrid(),
+        PanelGrid(label: "Sign up to discover human stories that deepen your understanding of the world.",modo: 1),
         PanelList(),
       ],
     ),

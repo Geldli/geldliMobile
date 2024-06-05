@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/bottom_nav_bar.dart';
-import 'package:flutter_application_2/model/UserList.dart';
+import 'package:flutter_application_2/controller/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/view/assets_page.dart';
 import 'package:flutter_application_2/view/dashboard_page.dart';
@@ -39,10 +39,10 @@ class _ControllPageState extends State<ControllPage> {
     });
 
     _pages = [
-    HomePage(username: userName ?? "oi",email: emailUser), 
+    HomePage(username: userName ?? "oi", email: emailUser,), 
     DashboardPage(), 
     ExpensivesPage(),
-    AssetsPage()
+    AssetPage()
     ];
     super.initState();
   }

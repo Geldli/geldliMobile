@@ -1,24 +1,24 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable, must_be_immutable
 
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_2/controller/AssetList.dart';
+import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/model/Category.dart';
-import 'package:flutter_application_2/model/Expensive.dart';
-import 'package:flutter_application_2/controller/ExpensiveList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
 
-class FormNew extends StatefulWidget {
-  FormNew({super.key});
+class FormNewA extends StatefulWidget {
+  const FormNewA({super.key});
 
   @override
-  State<FormNew> createState() => _FormNewState();
+  State<FormNewA> createState() => _FormNewAState();
 }
 
-class _FormNewState extends State<FormNew> {
+class _FormNewAState extends State<FormNewA> {
   GlobalKey<FormState> chave = GlobalKey();
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
@@ -26,24 +26,22 @@ class _FormNewState extends State<FormNew> {
   TextEditingController controllerValue = TextEditingController();
   TextEditingController controllerTag = TextEditingController();
   String? _controllerFrequency;
-  List<String> frequencyItems = ["1","2","3"];
-  dynamic classe;
 
-  void addNew(Expensive expensive){
-    Provider.of<ExpensiveList>(context,listen: false).addExpensive(expensive);
-    Provider.of<ExpensiveList>(context,listen: false).mostrar();
+  void addNew(Asset asset){
+    Provider.of<AssetList>(context,listen: false).addAsset(asset);
+    Provider.of<AssetList>(context,listen: false).mostrar();
   }
 
   void sucess(){
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Despesa criada!",style: TextStyle(color: myBlack)),
+      content: Text("Ativo criado!",style: TextStyle(color: myBlack)),
       duration: Durations.long2,
       backgroundColor: myDarkY,
       ));
   }
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpensiveList>(builder: (context, value, child) =>
+    return Consumer<AssetList>(builder: (context, value, child) =>
       Container(
         width: 170,
         decoration: BoxDecoration(
@@ -67,7 +65,7 @@ class _FormNewState extends State<FormNew> {
               ),
               contentPadding: EdgeInsets.all(0),
               titlePadding: EdgeInsets.fromLTRB(20, 10, 0, 10),
-              title: Text("Nova Despesa"),
+              title: Text("Novo Ativo"),
               titleTextStyle: formHeader,
               content: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -142,8 +140,7 @@ class _FormNewState extends State<FormNew> {
                             fillColor: myBlack
                           ),
                           maxLines: 3,
-                          style: formTextStyle,
-                           
+                          style: formTextStyle,  
                         ),
       
       
@@ -275,21 +272,20 @@ class _FormNewState extends State<FormNew> {
                           children: [
                             ElevatedButton(onPressed: (){
                               if(chave.currentState!.validate()){
-                                  String? frequencia = _controllerFrequency;
-                                  String titulo = controllerTitle.text;
-                                  String data = controllerDate.text;
-                                  double valor = double.parse(controllerValue.text);
-                                  String descricao = controllerDesc.text;
-                                  int i = Random().nextInt(7);
-                                  Color colorC = colorsForChoice[i];
-                                  String titleC = controllerTag.text;
-                                  Tag categoria = Tag(titleC , colorC);
-                                  Expensive expensiveCreating = Expensive(titulo, data, valor, descricao, frequencia, categoria);
-                                  addNew(expensiveCreating);
-                                  Navigator.pop(context);
-                                  sucess();                                  
-                              }
-                            }, 
+                                String? frequencia = _controllerFrequency;
+                                String titulo = controllerTitle.text;
+                                String data = controllerDate.text;
+                                double valor = double.parse(controllerValue.text);
+                                String descricao = controllerDesc.text;
+                                int i = Random().nextInt(7);
+                                Color colorC = colorsForChoice[i];
+                                String titleC = controllerTag.text;
+                                Tag categoria = Tag(titleC , colorC);
+                                Asset assetCreating = Asset(titulo, descricao, categoria, frequencia, data, valor);
+                                addNew(assetCreating);
+                                Navigator.pop(context);
+                                sucess();
+                            }},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: myDarkY
                             ),

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/profile_components/buttom_body_profile.dart';
 import 'package:flutter_application_2/model/User.dart';
-import 'package:flutter_application_2/model/UserList.dart';
+import 'package:flutter_application_2/controller/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';

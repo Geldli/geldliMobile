@@ -1,19 +1,18 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/components/expensives_components/form_new_add.dart';
+import 'package:flutter_application_2/components/assets_components/form_new_add_assets.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
-class PanelGrid extends StatefulWidget {
+class PanelGridA extends StatefulWidget {
   String label;
-  int modo;
-  PanelGrid({required this.label, required this.modo ,super.key});
+  PanelGridA({required this.label,super.key});
 
   @override
-  State<PanelGrid> createState() => _PanelGridState();
+  State<PanelGridA> createState() => _PanelGridAState();
 }
 
-class _PanelGridState extends State<PanelGrid> {
+class _PanelGridAState extends State<PanelGridA> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +25,7 @@ class _PanelGridState extends State<PanelGrid> {
               children: [
                 Text(widget.label,style: appBarDesc),
                 SizedBox(height: 20),
-                FormNew()
+                FormNewA()
               ],
             )
           ],

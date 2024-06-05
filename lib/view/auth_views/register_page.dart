@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/inputs.dart';
 import 'package:flutter_application_2/model/User.dart';
-import 'package:flutter_application_2/model/UserList.dart';
+import 'package:flutter_application_2/controller/UserList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:flutter_application_2/view/auth_views/login_page.dart';

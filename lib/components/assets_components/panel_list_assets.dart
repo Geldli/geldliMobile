@@ -1,37 +1,37 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/components/expensives_components/expensive_view.dart';
-import 'package:flutter_application_2/model/Expensive.dart';
-import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/components/assets_components/asset_view_assets.dart';
+import 'package:flutter_application_2/controller/AssetList.dart';
+import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
 
-class PanelList extends StatefulWidget {
-  const PanelList({super.key});
+class PanelListA extends StatefulWidget {
+  const PanelListA({super.key});
   @override
-  State<PanelList> createState() => _PanelListState();
+  State<PanelListA> createState() => _PanelListAState();
 }
 
-class _PanelListState extends State<PanelList> {
+class _PanelListAState extends State<PanelListA> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpensiveList>(builder: (context, value, child) =>
+    return Consumer<AssetList>(builder: (context, value, child) =>
       SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
           child: Center(
             child: Column(
               children: [
-                Text("Clique no bloco da despesa para ver detalhes.",style: listViewTitle),
+                Text("Clique no bloco do Ativo para ver detalhes.",style: listViewTitle),
                 SizedBox(height: 15),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: value.listExpensives.length,
+                    itemCount: value.listAssets.length,
                     itemBuilder: (context, index) {
-                      Expensive thisExpensive = value.listExpensives[index];
+                      Asset thisAsset = value.listAssets[index];
                       return Container(
                         decoration: BoxDecoration(
                           color: myBlack, 
@@ -42,17 +42,17 @@ class _PanelListState extends State<PanelList> {
                         child: ListTile(
                           onTap: () => showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) => ExpensiveView(thisExpensive: thisExpensive)
+                            builder: (BuildContext context) => AssetView(thisAsset: thisAsset)
                             ),
                           trailing: Container(
                             padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
                             decoration: BoxDecoration(
-                              color: thisExpensive.category!.colorC,
+                              color: thisAsset.categoryA!.colorC,
                               borderRadius: BorderRadius.circular(20)
                             ),
-                            child: Text(thisExpensive.category!.titleC, style: categoryText),
+                            child: Text(thisAsset.categoryA!.titleC, style: categoryText),
                           ),
-                          title: Text(thisExpensive.titleD),
+                          title: Text(thisAsset.titleA),
                           titleTextStyle: listViewTitle,
                         ),                                    
                       );                    

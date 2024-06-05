@@ -25,7 +25,7 @@ class UserDatas extends ChangeNotifier {
       {
         'nome': "Total de Ativos",
         'preco': 2222.00,
-        'icon': Icon(Icons.star_rate_rounded, size: 30),
+        'icon': Icon(Icons.savings_rounded, size: 30),
       },
     ];
     notifyListeners();
