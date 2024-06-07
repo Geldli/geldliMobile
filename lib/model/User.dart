@@ -17,8 +17,7 @@ String _password = "";
 
  String get password => this._password;
 
- set password(String value) => this._password = value;
-
+set password(String value) => this._password = value;
 User(this._idUser,this._username,this._email,this._password);
 
 }

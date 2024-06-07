@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/components/expensives%20components/panel_grid.dart';
-import 'package:flutter_application_2/components/expensives%20components/panel_list.dart';
+import 'package:flutter_application_2/components/expensives_components/panel_grid.dart';
+import 'package:flutter_application_2/components/expensives_components/panel_list.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
@@ -63,7 +63,7 @@ class _ExpensivesPageState extends State<ExpensivesPage> {
 
     body: TabBarView(  
       children: [
-        PanelGrid(),
+        PanelGrid(label: "Para cadastrar uma nova despesa, complete todos os campos. Isso ajudará você a manter um registro detalhado e organizado de suas finanças.",modo: 1),
         PanelList(),
       ],
     ),

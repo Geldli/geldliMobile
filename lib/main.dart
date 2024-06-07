@@ -1,11 +1,11 @@
-// ignore_for_file: unnecessary_new
+// ignore_for_file: unnecessary_new, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/model/ExpensiveList.dart';
-import 'package:flutter_application_2/model/UserList.dart';
-import 'package:flutter_application_2/model/userDatas.dart';
-import 'package:flutter_application_2/view/drawer%20views/settings_page.dart';
-
+import 'package:flutter_application_2/controller/AssetList.dart';
+import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/controller/UserList.dart';
+import 'package:flutter_application_2/controller/userDatas.dart';
+import 'package:flutter_application_2/view/auth_views/register_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -23,10 +23,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserList()),
         ChangeNotifierProvider(create: (context) => ExpensiveList()),
         ChangeNotifierProvider(create: (context) => UserDatas()),
+        ChangeNotifierProvider(create: (context) => AssetList()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SettingsPage(),
+        home: RegisterPage(),
       ),
       );
   }

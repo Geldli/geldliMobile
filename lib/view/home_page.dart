@@ -1,26 +1,27 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_application_2/components/home%20components/panel_user.dart';
-import 'package:flutter_application_2/model/ExpensiveList.dart';
-import 'package:flutter_application_2/model/userDatas.dart';
+import 'package:flutter_application_2/components/home_components/panel_user.dart';
+import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/controller/userDatas.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
+import 'package:flutter_application_2/view/drawer_views/about_page.dart';
+import 'package:flutter_application_2/view/drawer_views/settings_page.dart';
 import 'package:provider/provider.dart';
 
 
 class HomePage extends StatefulWidget {
-  String? username;
+  String username;
+  String email;
   HomePage({
     required this.username,
+    required this.email,
     super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
-
 
 class _HomePageState extends State<HomePage> {
 
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                    
+                      Navigator.push(context, MaterialPageRoute(builder:(context) => SettingsPage(email: widget.email,name: widget.username)));
                     }, 
                     child: Row(
                       children: [
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                         elevation: 0,
                       ),
                       onPressed: () {
-                      
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage()));
                       }, 
                       child: Row(
                         children: [
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       body: TabBarView(  
         children: [
           PanelUserHome(userDatas: Provider.of<UserDatas>(context)),
-          Text("brua")
+          Text("")
         ],
       ),
       ),),
