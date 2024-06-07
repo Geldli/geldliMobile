@@ -229,7 +229,7 @@ class _FormNewAState extends State<FormNewA> {
                               _controllerFrequency = newValue!;
                             });
                           },
-                          items: <String>['Apple', 'Mango', 'Banana', 'Peach']
+                          items: <String>['Anualmente', 'Todo mês', 'Ativo único']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,

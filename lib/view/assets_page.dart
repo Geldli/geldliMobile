@@ -63,7 +63,7 @@ class _AssetPageState extends State<AssetPage> {
 
     body: TabBarView(  
       children: [
-        PanelGridA(label: "Sign up to discover human stories that deepen your understanding of the world."),
+        PanelGridA(label: "Para cadastrar um novo ativo, complete todos os campos. Isso ajudará você a manter um registro detalhado e organizado de suas finanças."),
         PanelListA(),
       ],
     ),

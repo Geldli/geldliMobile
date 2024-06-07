@@ -12,7 +12,7 @@ class InputProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        initialValue: "ana",
+        initialValue: "xxx",
         style: styleHintRead,
         obscureText: itsPass,
         readOnly: true,

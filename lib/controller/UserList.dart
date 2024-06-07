@@ -7,9 +7,7 @@ import 'package:flutter_application_2/model/User.dart';
 
 class UserList extends ChangeNotifier {
 
-  List<User> listUsers = [
-    User("001", "m", "m", "m")
-  ];
+  List<User> listUsers = [];
 
   void mostrar() {
     listUsers.forEach((User u) {

@@ -5,9 +5,7 @@ import 'package:flutter_application_2/controller/AssetList.dart';
 import 'package:flutter_application_2/controller/ExpensiveList.dart';
 import 'package:flutter_application_2/controller/UserList.dart';
 import 'package:flutter_application_2/controller/userDatas.dart';
-import 'package:flutter_application_2/view/assets_page.dart';
 import 'package:flutter_application_2/view/auth_views/register_page.dart';
-import 'package:flutter_application_2/view/drawer_views/about_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
