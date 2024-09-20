@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable
 
 import 'dart:math';
-
+import 'package:flutter/foundation.dart';
+import 'package:flutter_application_2/controller/CategoryList.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/model/Category.dart';
@@ -10,7 +12,7 @@ import 'package:flutter_application_2/controller/ExpensiveList.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
-
+import 'package:drop_down_search_field/drop_down_search_field.dart';
 class FormNew extends StatefulWidget {
   FormNew({super.key});
 
@@ -25,9 +27,44 @@ class _FormNewState extends State<FormNew> {
   TextEditingController controllerDate = TextEditingController();
   TextEditingController controllerValue = TextEditingController();
   TextEditingController controllerTag = TextEditingController();
+
   String? _controllerFrequency;
   List<String> frequencyItems = ["1","2","3"];
-  dynamic classe;
+  final TextEditingController _dropdownSearchFieldController = TextEditingController();
+  String? _selectedFruit;
+  SuggestionsBoxController suggestionBoxController = SuggestionsBoxController();
+  List<Tag> categoryList =  [];
+  static List<String> tags = [];
+  Map<String, dynamic> mapp = Map();
+
+  @override
+  void initState(){
+    categoryList =  Provider.of<CategoryList>(context, listen: false).listCategory;
+    for(int i=0; i<categoryList.length; i++){
+      mapp[categoryList[i].titleC] = categoryList[i].colorC;
+      tags.add(categoryList[i].titleC);
+    }
+    super.initState();
+  }
+
+  dynamic getColorForTitle(String title){
+    var color;
+    color = mapp[title];
+    return color;
+  }
+
+
+  static List<String> getSuggestions(String query) {
+    List<String> matches = <String>[];
+    matches.addAll(tags);
+    print(matches.toString());
+    matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+
+  void newTag(Tag tag){
+    Provider.of<CategoryList>(context,listen: false).addCategory(tag);
+  }
 
   void addNew(Expensive expensive){
     Provider.of<ExpensiveList>(context,listen: false).addExpensive(expensive);
@@ -43,7 +80,7 @@ class _FormNewState extends State<FormNew> {
   }
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpensiveList>(builder: (context, value, child) =>
+    return Consumer2<ExpensiveList, CategoryList>(builder: (context, value, value2, child)  =>
       Container(
         width: 170,
         decoration: BoxDecoration(
@@ -87,7 +124,6 @@ class _FormNewState extends State<FormNew> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(height: 10),
-      
                         //TITLE input
                         TextFormField(
                           controller: controllerTitle,
@@ -149,61 +185,112 @@ class _FormNewState extends State<FormNew> {
       
                         SizedBox(height: 10),
                         //CATEGORIA input provisorio
-                        TextFormField(
-                          controller: controllerTag,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: myDarkY, width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            hintText: "Categoria",
-                            hintStyle: hintForm,
-                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                            isCollapsed: true,
-                            filled: true,
-                            fillColor: myBlack,
-                            errorStyle: errorStyle,
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: myDarkY),
-                              borderRadius: BorderRadius.circular(10),
-                            )
-                          ),
-                          validator: (value) {
-                            if(value!.isEmpty){
-                              return "Por favor escolha um título!";
-                            }
-                            return null;
-                          },
-                          style: formTextStyle,
-                        ),
-      
-                        SizedBox(height: 10),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: DropDownSearchFormField(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.transparent),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: myDarkY, width: 2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  hintText: "Categoria",
+                                  hintStyle: hintForm,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                  isCollapsed: true,
+                                  filled: true,
+                                  fillColor: myBlack,
+                                  errorStyle: errorStyle,
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: myDarkY),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),   
+                                ),
+                                style: formTextStyle,
+                                controller: _dropdownSearchFieldController,
+                                ),
+                                suggestionsCallback: (pattern) {
+                                  return getSuggestions(pattern);
+                                },
+                                itemBuilder: (context, String suggestion) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: myBlue
+                                    ),
+                                    child: Container(
+                                      height: 25,
+                                      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color:  getColorForTitle(suggestion)
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(suggestion),
+                                          IconButton(
+                                            padding: EdgeInsets.all(0),
+                                            onPressed: (){}, 
+                                            icon: Icon(Icons.more_vert_rounded),
+                                            color: myBlack,
+                                            )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                transitionBuilder: (context, suggestionsBox, controller) {
+                                  return suggestionsBox;
+                                },
+                                onSuggestionSelected: (String suggestion) {
+                                  _dropdownSearchFieldController.text = suggestion;
+                                },
+                                suggestionsBoxController: suggestionBoxController,
+                                validator: (value) => value!.isEmpty ? 'www' : null,
+                                onSaved: (value){ 
+                                  _selectedFruit = value;
+                                  },
 
-                        //DATE input
-                        TextFormField(
-                          controller: controllerDate,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.circular(10),
+                                displayAllSuggestionWhenTap: true,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: myDarkY, width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            hintText: "Data",
-                            hintStyle: hintForm,
-                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                            isCollapsed: true,
-                            filled: true,
-                            fillColor: myBlack
                           ),
-                          style: formTextStyle,
-                        ),
+                                
+                            SizedBox(width: 10),
+        
+                            //DATE input
+                            SizedBox(
+                              width: 170,
+                              child: TextFormField(
+                                controller: controllerDate,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.transparent),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: myDarkY, width: 2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  hintText: "Data",
+                                  hintStyle: hintForm,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                  isCollapsed: true,
+                                  filled: true,
+                                  fillColor: myBlack
+                                ),
+                                style: formTextStyle,
+                              ),
+                            ),
+                        ],
+                      ),
       
                         SizedBox(height: 10),
       
@@ -280,11 +367,22 @@ class _FormNewState extends State<FormNew> {
                                   String data = controllerDate.text;
                                   double valor = double.parse(controllerValue.text);
                                   String descricao = controllerDesc.text;
+
+                                  // category
+                                  var tag;
                                   int i = Random().nextInt(7);
-                                  Color colorC = colorsForChoice[i];
-                                  String titleC = controllerTag.text;
-                                  Tag categoria = Tag(titleC , colorC);
-                                  Expensive expensiveCreating = Expensive(titulo, data, valor, descricao, frequencia, categoria);
+                                  Color colorC;
+                                  String titleC = _dropdownSearchFieldController.text;
+                                  if(tags.contains(titleC)){
+                                    colorC = getColorForTitle(titleC);
+                                    tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
+                                  }else if(!tags.contains(titleC)){
+                                    colorC = colorsForChoice[i];
+                                    tag = Tag(titleC, colorC); 
+                                    newTag(tag);         
+                                  }         
+                                  // creating expensive
+                                  Expensive expensiveCreating = Expensive(titulo, data, valor, descricao, frequencia, tag);
                                   addNew(expensiveCreating);
                                   Navigator.pop(context);
                                   sucess();                                  
