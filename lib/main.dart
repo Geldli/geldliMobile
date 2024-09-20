@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserList()),
+        ChangeNotifierProvider(create: (context) => UserDatas()),
         ChangeNotifierProvider(create: (context) => ExpensiveList()),
         ChangeNotifierProvider(create: (context) => CategoryList()),
         ChangeNotifierProvider(create: (context) => AssetList()),

@@ -47,6 +47,9 @@ dependencies:
   drop_down_search_field: ^1.0.4
   blurrycontainer: ^2.1.0
   mask_text_input_formatter: ^2.9.0
+  date_format_field: ^0.1.0
+  datetime_picker_field_platform: ^0.0.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

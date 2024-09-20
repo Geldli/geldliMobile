@@ -1,14 +1,23 @@
   // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/model/Category.dart';
 import 'package:flutter_application_2/model/Expensive.dart';
 
   class ExpensiveList extends ChangeNotifier{
 
-    List<Expensive> listExpensives = [];
+    List<Expensive> listExpensives = [
+      Expensive("_titleD", "_dateToRemember", 20, "_descriptD", "_frequency", Tag("s", Colors.amber)),
+      Expensive("_titleD", "_dateToRemember", 20, "_descriptD", "_frequency", Tag("s", Colors.amber))
+    ];
 
     void addExpensive(Expensive expensive){
       listExpensives.add(expensive);
+      notifyListeners();
+    }
+
+    void removeExpensive(Expensive expensive){
+      listExpensives.remove(expensive);
       notifyListeners();
     }
 

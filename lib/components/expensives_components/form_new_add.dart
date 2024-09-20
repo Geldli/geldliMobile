@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable
 
 import 'dart:math';
+import 'package:date_format_field/date_format_field.dart';
+import 'package:datetime_picker_field_platform/datetime_picker_field_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_application_2/controller/CategoryList.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,6 +31,33 @@ class _FormNewState extends State<FormNew> {
   TextEditingController controllerValue = TextEditingController();
   TextEditingController controllerTag = TextEditingController();
 
+  DateTime? selectedDate;
+  final dateFormat = DateFormat('dd/MM/yyyy'); // Formato da data
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(data: ThemeData.light().copyWith(
+          colorScheme: ColorScheme.light(primary: myDarkY),
+          dialogBackgroundColor: myWhite
+        ),
+        child: child ?? Container());
+      },
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        controllerDate.text = dateFormat.format(selectedDate!);
+      });
+    }
+  }
+  
+  DateTime? data;
   String? _controllerFrequency;
   List<String> frequencyItems = ["1","2","3"];
   final TextEditingController _dropdownSearchFieldController = TextEditingController();
@@ -265,30 +295,37 @@ class _FormNewState extends State<FormNew> {
                                 
                             SizedBox(width: 10),
         
-                            //DATE input
                             SizedBox(
                               width: 170,
-                              child: TextFormField(
-                                controller: controllerDate,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.transparent),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: myDarkY, width: 2),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  hintText: "Data",
-                                  hintStyle: hintForm,
-                                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                                  isCollapsed: true,
-                                  filled: true,
-                                  fillColor: myBlack
-                                ),
-                                style: formTextStyle,
-                              ),
+                              child: GestureDetector(
+      onTap: () => _selectDate(context),
+      child: AbsorbPointer(
+        child: TextFormField(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: myDarkY, width: 2), // Altere a cor conforme necessário
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintText: "Data",
+            hintStyle: formTextStyle, // Altere conforme necessário
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            isCollapsed: true,
+            filled: true,
+            fillColor: myBlack, // Altere conforme necessário
+            labelStyle: formTextStyle, // Altere conforme necessário
+          ),
+          readOnly: true, // Para que o teclado não apareça
+          controller: controllerDate,
+          style: formTextStyle,
+        ),
+      ),
+    )
                             ),
+
                         ],
                       ),
       
@@ -385,7 +422,9 @@ class _FormNewState extends State<FormNew> {
                                   Expensive expensiveCreating = Expensive(titulo, data, valor, descricao, frequencia, tag);
                                   addNew(expensiveCreating);
                                   Navigator.pop(context);
-                                  sucess();                                  
+                                  sucess();     
+                                  double a = Provider.of<ExpensiveList>(context,listen: false).totalExpensives();
+                                  print("puxa" + a.toString());                             
                               }
                             }, 
                             style: ElevatedButton.styleFrom(

@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Consumer<UserList>(builder: (context, value, child) => 
     Scaffold(
-      backgroundColor: myBlue,
+      backgroundColor: myBlack,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 25,horizontal: 30),
         child: Form(

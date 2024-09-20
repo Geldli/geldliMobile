@@ -16,6 +16,10 @@ class PanelList extends StatefulWidget {
 
 class _PanelListState extends State<PanelList> {
 
+  void deleteExpensive(Expensive expensive){
+    Provider.of<ExpensiveList>(context, listen: false).removeExpensive(expensive);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpensiveList>(builder: (context, value, child) =>
@@ -52,6 +56,24 @@ class _PanelListState extends State<PanelList> {
                             ),
                             child: Text(thisExpensive.category!.titleC, style: categoryText),
                           ),
+                          leading: PopupMenuButton(
+                            iconColor: myWhite,
+                            color: myWhite,
+                            onSelected: (value) {
+                              if(value == "delete"){
+                                deleteExpensive(thisExpensive);
+                              }  
+                            },
+                            itemBuilder: (BuildContext context){
+                              return const [
+                                PopupMenuItem(
+                                  child: Text("Excluir"),
+                                  value: 'delete',
+                                  height: 35,
+                                )
+                              ];
+                            }
+                            ),
                           title: Text(thisExpensive.titleD),
                           titleTextStyle: listViewTitle,
                         ),                                    

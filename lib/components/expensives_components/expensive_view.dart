@@ -29,7 +29,7 @@ class _ExpensiveViewState extends State<ExpensiveView> {
           borderRadius: BorderRadius.circular(15)
         ),
         content: Container(
-          height: 105,
+          height: 120,
           padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,6 +67,13 @@ class _ExpensiveViewState extends State<ExpensiveView> {
                 children: [
                   Text("Frequência:", style: dialogH2),
                   Text(widget.thisExpensive.frequency!, style: dialogH3),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Lembrete:", style: dialogH2),
+                  Text(widget.thisExpensive.dateToRemember, style: dialogH3),
                 ],
               ),
               Row(

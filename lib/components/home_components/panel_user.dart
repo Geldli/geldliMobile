@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/controller/AssetList.dart';
+import 'package:flutter_application_2/controller/ExpensiveList.dart';
 import 'package:flutter_application_2/controller/userDatas.dart';
+import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +18,23 @@ class PanelUserHome extends StatefulWidget {
 }
 
 class _PanelUserHomeState extends State<PanelUserHome> {
-  
+  //var patrimony;
+  //var totalExpensive;
+  //var totalAssets;
+  List<double> datas = [];
+
+  @override
+  void initState(){
+    var totalExpensive = Provider.of<ExpensiveList>(context,listen: false).totalExpensives();
+    var totalAssets = Provider.of<AssetList>(context,listen: false).totalAssets();
+    var patrimony = (totalAssets - totalExpensive);
+    datas.addAll([patrimony,totalExpensive,totalAssets, ]);
+    setState(() {
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var userDatas = Provider.of<UserDatas>(context);
@@ -25,9 +44,10 @@ class _PanelUserHomeState extends State<PanelUserHome> {
         child: Center(
           child: Column(
             children: [
+             // Text("teste" + totalExpensive.toString(), style: TextStyle(color: Colors.white),),
               Expanded(
                 child: ListView.builder(
-                  itemCount: userDatas.dados.length,
+                  itemCount: 3,
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
@@ -41,7 +61,7 @@ class _PanelUserHomeState extends State<PanelUserHome> {
                         iconColor: myDarkY,
                         title: Text(userDatas.dados[index]['nome']),
                         titleTextStyle: listViewTitle,
-                        subtitle: Text("R\$ ${userDatas.dados[index]['preco']}"),
+                        subtitle: Text("R\$ ${datas[index].toStringAsFixed(2)}"),
                         subtitleTextStyle: listViewSubtitle,
                       ),                                    
                     );
