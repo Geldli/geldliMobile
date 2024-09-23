@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/expensives_components/expensive_view.dart';
+import 'package:flutter_application_2/components/expensives_components/panel_list.dart';
 import 'package:flutter_application_2/controller/AssetList.dart';
 import 'package:flutter_application_2/controller/CategoryList.dart';
 import 'package:flutter_application_2/controller/ExpensiveList.dart';

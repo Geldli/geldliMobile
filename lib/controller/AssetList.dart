@@ -7,7 +7,6 @@ import 'package:flutter_application_2/model/Category.dart';
   class AssetList extends ChangeNotifier{
 
     List<Asset> listAssets = [
-      Asset("s", "_descriptA", Tag('d', Colors.black), "_frequencyA", "", 500)
     ];
 
     void addAsset(Asset asset){

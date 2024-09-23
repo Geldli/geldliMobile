@@ -4,8 +4,12 @@ import 'package:flutter_application_2/model/Category.dart';
 
 class CategoryList extends ChangeNotifier{
   List<Tag> listCategory = [
-    Tag("teste", Colors.amber),
-    Tag("tste2", Colors.red)
+    Tag("alimentação", Colors.deepOrangeAccent),
+    Tag("alimentação", Colors.deepOrangeAccent),
+    Tag("alimentação", Colors.deepOrangeAccent),
+    Tag("alimentação", Colors.deepOrangeAccent),
+    Tag("alimentação", Colors.deepOrangeAccent),
+    Tag("alimentação", Colors.deepOrangeAccent)
   ];
 
   void addCategory(Tag category){

@@ -16,16 +16,22 @@ class PanelListA extends StatefulWidget {
 
 class _PanelListAState extends State<PanelListA> {
 
+  void deleteAsset(Asset asset){
+    //Provider.of<AssetList>(context, listen: false).removeAsset(asset);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<AssetList>(builder: (context, value, child) =>
+        return Consumer<AssetList>(builder: (context, value, child) =>
       SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
           child: Center(
             child: Column(
               children: [
-                Text("Clique no bloco do Ativo para ver detalhes.",style: listViewTitle),
+                AssetList().listAssets.isNotEmpty ?
+                Text("Clique no bloco da despesa para ver detalhes.",style: listViewTitle):
+                Text("Aqui você poderá controlar suas despesas depois forem criadas.",style: listViewTitle),
                 SizedBox(height: 15),
                 Expanded(
                   child: ListView.builder(
@@ -52,6 +58,24 @@ class _PanelListAState extends State<PanelListA> {
                             ),
                             child: Text(thisAsset.categoryA!.titleC, style: categoryText),
                           ),
+                          leading: PopupMenuButton(
+                            iconColor: myWhite,
+                            color: myWhite,
+                            onSelected: (value) {
+                              if(value == "delete"){
+                                deleteAsset(thisAsset);
+                              }  
+                            },
+                            itemBuilder: (BuildContext context){
+                              return const [
+                                PopupMenuItem(
+                                  child: Text("Excluir"),
+                                  value: 'delete',
+                                  height: 35,
+                                )
+                              ];
+                            }
+                            ),
                           title: Text(thisAsset.titleA),
                           titleTextStyle: listViewTitle,
                         ),                                    

@@ -119,6 +119,12 @@ var hintForm = GoogleFonts.notoSans(
   FontWeight.w400,
 );
 
+var hintForm2 = GoogleFonts.notoSans(
+  color: myBlack,
+  fontSize: 14, fontWeight: 
+  FontWeight.w600,
+);
+
 var formTextStyle = GoogleFonts.notoSans(
   color: myWhite,
   fontSize: 15, fontWeight: 
