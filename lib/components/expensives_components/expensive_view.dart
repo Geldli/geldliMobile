@@ -2,14 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_2/model/Expensive.dart';
-import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/model/Expense.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
 
 class ExpensiveView extends StatefulWidget {
-  Expensive thisExpensive;
+  Expense thisExpensive;
   ExpensiveView({required this.thisExpensive,super.key});
 
   @override
@@ -19,74 +18,72 @@ class ExpensiveView extends StatefulWidget {
 class _ExpensiveViewState extends State<ExpensiveView> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpensiveList>(builder: (context, value, child) => 
-      AlertDialog(
-        alignment: AlignmentDirectional.bottomEnd,
-        title: Text(widget.thisExpensive.titleD),
-        titleTextStyle: dialogH1,
-        backgroundColor: myBlue,  
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15)
-        ),
-        content: Container(
-          height: 120,
-          padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Descrição:    ", style: dialogH2),
-                  Flexible(
-                    child: Container(
-                      child: Text(widget.thisExpensive.descriptD,
-                      overflow: TextOverflow.ellipsis,
-                      style: dialogH3,
-                      ),
+    return AlertDialog(
+      alignment: AlignmentDirectional.bottomEnd,
+      title: Text(widget.thisExpensive.titleD),
+      titleTextStyle: dialogH1,
+      backgroundColor: myBlue,  
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15)
+      ),
+      content: Container(
+        height: 120,
+        padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Descrição:    ", style: dialogH2),
+                Flexible(
+                  child: Container(
+                    child: Text(widget.thisExpensive.descriptD,
+                    overflow: TextOverflow.ellipsis,
+                    style: dialogH3,
                     ),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Categoria:", style: dialogH2),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: widget.thisExpensive.category!.colorC,
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Text(widget.thisExpensive.category!.titleC, style: categoryText)),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Frequência:", style: dialogH2),
-                  Text(widget.thisExpensive.frequency!, style: dialogH3),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Lembrete:", style: dialogH2),
-                  Text(widget.thisExpensive.dateToRemember, style: dialogH3),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Valor em Reais:", style: dialogH2),
-                  Text('R\$ ${widget.thisExpensive.valueD.toStringAsFixed(2)}', style: dialogH3),
-                ],
-              )
-            ],
-          ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Categoria:", style: dialogH2),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: widget.thisExpensive.category!.toColor(),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Text(widget.thisExpensive.category!.titleC, style: categoryText)),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Frequência:", style: dialogH2),
+                Text(widget.thisExpensive.frequency!, style: dialogH3),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Lembrete:", style: dialogH2),
+                Text(widget.thisExpensive.dateToRemember, style: dialogH3),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Valor em Reais:", style: dialogH2),
+                Text('R\$ ${widget.thisExpensive.valueD.toStringAsFixed(2)}', style: dialogH3),
+              ],
+            )
+          ],
         ),
-      )
+      ),
     );
   }
 }

@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/expensives_components/form_new_add.dart';
 import 'package:flutter_application_2/ui/text.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class PanelGrid extends StatefulWidget {
   String label;
   int modo;
@@ -13,7 +14,27 @@ class PanelGrid extends StatefulWidget {
   State<PanelGrid> createState() => _PanelGridState();
 }
 
+ String userId = '';
+
 class _PanelGridState extends State<PanelGrid> {
+    Future<void> fetchUserId() async {
+    final response = await http.get(Uri.parse('http://localhost:3000/api/v1/user/getAll'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> users = json.decode(response.body);
+      if (users.isNotEmpty) {
+        setState(() {
+          userId = users[0]['id'].toString(); // Supondo que o ID do usuário está no campo 'id'
+        });
+        print('User ID: $userId'); // Imprime o ID do usuário no console
+      } else {
+        print('Nenhum usuário encontrado.');
+      }
+    } else {
+      print('Erro ao buscar usuários: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +47,7 @@ class _PanelGridState extends State<PanelGrid> {
               children: [
                 Text(widget.label,style: appBarDesc),
                 SizedBox(height: 20),
-                FormNew()
+                FormNew(),
               ],
             )
           ],

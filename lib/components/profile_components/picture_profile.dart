@@ -5,7 +5,7 @@ import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 
 class PictureProfile extends StatelessWidget {
-  String name;
+  String? name;
   PictureProfile({required this.name,super.key});
 
   @override
@@ -32,7 +32,7 @@ class PictureProfile extends StatelessWidget {
           ),
           ),
           Text("nome de usuário", style: profileH3),
-          Text(name, style: profileH1)
+          Text(name!, style: profileH1)
         ],
       )
       );

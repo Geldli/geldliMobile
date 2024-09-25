@@ -1,11 +1,16 @@
 class User{
-String _idUser = "";
 String _email = "";
 String _username = "";
 String _password = "";
- String get idUser => this._idUser;
+String _name = "";
+String _surname = "";
+ String get name => this._name;
 
- set idUser(String value) => this._idUser = value;
+ set name(String value) => this._name = value;
+
+ String get surname => this._surname;
+
+ set surname(String value) => this._surname = value;
 
  String get email => this._email;
 
@@ -18,6 +23,7 @@ String _password = "";
  String get password => this._password;
 
 set password(String value) => this._password = value;
-User(this._idUser,this._username,this._email,this._password);
+
+User(this._username,this._email,this._password , this._name, this._surname);
 
 }

@@ -6,7 +6,6 @@ import 'package:drop_down_search_field/drop_down_search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/controller/AssetList.dart';
-import 'package:flutter_application_2/controller/CategoryList.dart';
 import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/model/Category.dart';
 import 'package:flutter_application_2/ui/colors.dart';
@@ -67,7 +66,7 @@ class _FormNewAState extends State<FormNewA> {
 
   @override
   void initState(){
-    categoryList =  Provider.of<CategoryList>(context, listen: false).listCategory;
+    //categoryList =  Provider.of<CategoryListAsset>(context, listen: false).listCategoryExpense;
     for(int i=0; i<categoryList.length; i++){
       mapp[categoryList[i].titleC] = categoryList[i].colorC;
       tags.add(categoryList[i].titleC);
@@ -91,7 +90,7 @@ class _FormNewAState extends State<FormNewA> {
   }
 
   void newTag(Tag tag){
-    Provider.of<CategoryList>(context,listen: false).addCategory(tag);
+    //Provider.of<CategoryListExpense>(context,listen: false).addCategory(tag);
   }
 
   void addNew(Asset Asset){
@@ -109,7 +108,7 @@ class _FormNewAState extends State<FormNewA> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<AssetList, CategoryList>(builder: (context, value, value2, child)  =>
+    return 
       Container(
         width: 170,
         decoration: BoxDecoration(
@@ -407,13 +406,13 @@ class _FormNewAState extends State<FormNewA> {
                                   // category
                                   var tag;
                                   int i = Random().nextInt(7);
-                                  Color colorC;
+                                  String colorC;
                                   String titleC = _dropdownSearchFieldController.text;
                                   if(tags.contains(titleC)){
                                     colorC = getColorForTitle(titleC);
                                     tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
                                   }else if(!tags.contains(titleC)){
-                                    colorC = colorsForChoice[i];
+                                    colorC = "red";
                                     tag = Tag(titleC, colorC); 
                                     newTag(tag);         
                                   }         
@@ -423,7 +422,6 @@ class _FormNewAState extends State<FormNewA> {
                                   Navigator.pop(context);
                                   sucess();     
                                   double a = Provider.of<AssetList>(context,listen: false).totalAssets();
-                                  print("puxa" + a.toString());                             
                               }
                             }, 
                             style: ElevatedButton.styleFrom(
@@ -451,7 +449,6 @@ class _FormNewAState extends State<FormNewA> {
             Text("ADICIONAR ",style: buttomText),
             Icon(Icons.add_rounded,color: myBlue,weight: 6),
         ],
-      ))),
-    );
+      )));
   }
 }

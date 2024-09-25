@@ -4,14 +4,14 @@ import 'dart:math';
 import 'package:date_format_field/date_format_field.dart';
 import 'package:datetime_picker_field_platform/datetime_picker_field_platform.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_application_2/controller/CategoryList.dart';
+import 'package:flutter_application_2/controller/expense_controller.dart';
+import 'package:flutter_application_2/controller/tag_expense_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/model/Category.dart';
-import 'package:flutter_application_2/model/Expensive.dart';
-import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/model/Expense.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +33,9 @@ class _FormNewState extends State<FormNew> {
 
   DateTime? selectedDate;
   final dateFormat = DateFormat('dd/MM/yyyy'); // Formato da data
+
+  ExpenseController _expenseController = ExpenseController();
+  TagExpenseController _tagExpenseController = TagExpenseController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -65,17 +68,28 @@ class _FormNewState extends State<FormNew> {
   SuggestionsBoxController suggestionBoxController = SuggestionsBoxController();
   List<Tag> categoryList =  [];
   static List<String> tags = [];
-  Map<String, dynamic> mapp = Map();
+  Map<String, String> mapp = Map();
 
-  @override
-  void initState(){
-    categoryList =  Provider.of<CategoryList>(context, listen: false).listCategory;
-    for(int i=0; i<categoryList.length; i++){
+
+void loadTags() async {
+  await _tagExpenseController.getTagByUserId(4); // Substitua pelo ID do usuário
+  setState(() {
+    categoryList = _tagExpenseController.tagExpenseList;
+    print("opa" + categoryList.toString());
+    mapp.clear(); // Limpe o mapa antes de preenchê-lo novamente
+    tags.clear(); // Limpe a lista de tags antes de preenchê-la novamente
+    for (int i = 0; i < categoryList.length; i++) {
       mapp[categoryList[i].titleC] = categoryList[i].colorC;
       tags.add(categoryList[i].titleC);
     }
-    super.initState();
-  }
+  });
+}
+
+@override
+void initState() {
+  super.initState();
+  loadTags();
+}
 
   dynamic getColorForTitle(String title){
     var color;
@@ -83,22 +97,12 @@ class _FormNewState extends State<FormNew> {
     return color;
   }
 
-
   static List<String> getSuggestions(String query) {
     List<String> matches = <String>[];
     matches.addAll(tags);
     print(matches.toString());
     matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
     return matches;
-  }
-
-  void newTag(Tag tag){
-    Provider.of<CategoryList>(context,listen: false).addCategory(tag);
-  }
-
-  void addNew(Expensive expensive){
-    Provider.of<ExpensiveList>(context,listen: false).addExpensive(expensive);
-    Provider.of<ExpensiveList>(context,listen: false).mostrar();
   }
 
   void sucess(){
@@ -110,7 +114,7 @@ class _FormNewState extends State<FormNew> {
   }
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ExpensiveList, CategoryList>(builder: (context, value, value2, child)  =>
+    return 
       Container(
         width: 170,
         decoration: BoxDecoration(
@@ -259,7 +263,8 @@ class _FormNewState extends State<FormNew> {
                                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color:  getColorForTitle(suggestion)
+                                        color:  Colors.red
+                                        //getColorForTitle(suggestion)
                                       ),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -400,31 +405,28 @@ class _FormNewState extends State<FormNew> {
                             ElevatedButton(onPressed: (){
                               if(chave.currentState!.validate()){
                                   String? frequencia = _controllerFrequency;
-                                  String titulo = controllerTitle.text;
+                                  String? titulo = controllerTitle.text;
                                   String data = controllerDate.text;
                                   double valor = double.parse(controllerValue.text);
                                   String descricao = controllerDesc.text;
-
                                   // category
                                   var tag;
-                                  int i = Random().nextInt(7);
-                                  Color colorC;
-                                  String titleC = _dropdownSearchFieldController.text;
-                                  if(tags.contains(titleC)){
+                                  //int i = Random().nextInt(7);
+                                  String colorC; 
+                                  String titleC = _dropdownSearchFieldController.text.trim();
+                                  if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
                                     colorC = getColorForTitle(titleC);
                                     tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                  }else if(!tags.contains(titleC)){
-                                    colorC = colorsForChoice[i];
-                                    tag = Tag(titleC, colorC); 
-                                    newTag(tag);         
-                                  }         
+                                  } else {
+                                    colorC = Colors.red.toString(); // Converte a cor para String
+                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                    _tagExpenseController.createExpenseTag(tag, 4);
+                                  }
                                   // creating expensive
-                                  Expensive expensiveCreating = Expensive(titulo, data, valor, descricao, frequencia, tag);
-                                  addNew(expensiveCreating);
+                                  Expense currentExpense = Expense(titulo, data, valor, descricao, frequencia, tag);
+                                  _expenseController.createExpense(currentExpense, 4);
                                   Navigator.pop(context);
                                   sucess();     
-                                  double a = Provider.of<ExpensiveList>(context,listen: false).totalExpensives();
-                                  print("puxa" + a.toString());                             
                               }
                             }, 
                             style: ElevatedButton.styleFrom(
@@ -452,7 +454,6 @@ class _FormNewState extends State<FormNew> {
             Text("ADICIONAR ",style: buttomText),
             Icon(Icons.add_rounded,color: myBlue,weight: 6),
         ],
-      ))),
-    );
+      )));
   }
 }

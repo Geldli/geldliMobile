@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/controller/ExpensiveList.dart';
+import 'package:flutter_application_2/controller/expense_controller.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 
 class PanelRemembers extends StatefulWidget {
@@ -12,6 +12,9 @@ class PanelRemembers extends StatefulWidget {
 }
 
 class _PanelRemembersState extends State<PanelRemembers> {
+
+  ExpenseController _expenseController = ExpenseController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +25,7 @@ class _PanelRemembersState extends State<PanelRemembers> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: ExpensiveList().listExpensives.length,
+                  itemCount: _expenseController.expenseList.length,
                   itemBuilder:(context, index) {
                   return Container(
                     decoration: BoxDecoration(

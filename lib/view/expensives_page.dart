@@ -5,6 +5,8 @@ import 'package:flutter_application_2/components/expensives_components/panel_gri
 import 'package:flutter_application_2/components/expensives_components/panel_list.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ExpensivesPage extends StatefulWidget {
   const ExpensivesPage({super.key});
@@ -14,6 +16,14 @@ class ExpensivesPage extends StatefulWidget {
 }
 
 class _ExpensivesPageState extends State<ExpensivesPage> {
+
+
+  @override
+  initState(){
+    super.initState();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

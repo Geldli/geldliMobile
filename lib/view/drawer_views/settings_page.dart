@@ -7,8 +7,8 @@ import 'package:flutter_application_2/components/profile_components/picture_prof
 
 
 class SettingsPage extends StatefulWidget {
-  String email;
-  String name;
+  String? email;
+  String? name;
   SettingsPage({
     required this.email,
     required this.name,

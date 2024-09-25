@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/inputs.dart';
-import 'package:flutter_application_2/controller/UserList.dart';
+import 'package:flutter_application_2/controller/user_controller.dart';
+import 'package:flutter_application_2/model/User.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:flutter_application_2/view/controll_page.dart';
@@ -23,12 +24,9 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> loginKey = GlobalKey();
   TextEditingController controllEmail = TextEditingController();
   TextEditingController controllPass = TextEditingController();
-
-  String hashPassword(String password) {
-  var bytes = utf8.encode(password);
-  var digest = sha256.convert(bytes);
-  return digest.toString();
-  }
+  User? currentUser;
+  UserController _userController = UserController();
+  UserDetails? userDetails;
 
   void invalidLogin(){
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -38,18 +36,13 @@ class _LoginPageState extends State<LoginPage> {
       ));
   }
 
-  void verify(String email, String pass) {
-    bool userExists = Provider.of<UserList>(context, listen: false).userExists(email, pass);
-    if (userExists) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ControllPage(email: controllEmail.text)));
-    } else {
-    invalidLogin();
+  void sucess(){
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ControllPage(currentUser: userDetails)));
     }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserList>(builder: (context, value, child) => Scaffold(
+    return Scaffold(
       backgroundColor: myBlack,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20,horizontal: 30),
@@ -73,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   children: [
 
-                    Input(label: "Email", 
+                    Input(label: "Email ou Username", 
                     prefixxIcon: "../assets/images/email.png",
                     control: controllEmail,
                     itsPass: false),
@@ -98,15 +91,22 @@ class _LoginPageState extends State<LoginPage> {
 
                     //login botao
 
-                    ElevatedButton(onPressed: () {
+                    ElevatedButton(onPressed: () async {
                       if(loginKey.currentState!.validate()){
-                        String email = controllEmail.text;
-                        String pass = hashPassword(controllPass.text);
-                        verify(email,pass);
-                      }
+                        String login = controllEmail.text;
+                        String pass = controllPass.text;
+                        userDetails = await _userController.login(login, pass);
+                          if (userDetails != null) {
+                                  // Aqui você pode usar o userId conforme necessário
+                                  print('User ID: $userDetails');
+                                  sucess(); // Chama a função de sucesso
+                                } else {
+                                  invalidLogin(); // Chama a função de falha
+                                }                 
                       setState(() {
                         
-                      });
+                      }); 
+                      }
                     }, 
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myDarkY,
@@ -132,6 +132,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),),  
       ),
-    ),);
+    );
   }
 }

@@ -53,7 +53,7 @@ class _PanelListAState extends State<PanelListA> {
                           trailing: Container(
                             padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
                             decoration: BoxDecoration(
-                              color: thisAsset.categoryA!.colorC,
+                              color: thisAsset.categoryA!.toColor(),
                               borderRadius: BorderRadius.circular(20)
                             ),
                             child: Text(thisAsset.categoryA!.titleC, style: categoryText),

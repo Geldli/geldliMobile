@@ -56,7 +56,7 @@ class _AssetViewState extends State<AssetView> {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
                     decoration: BoxDecoration(
-                      color: widget.thisAsset.categoryA!.colorC,
+                      color: widget.thisAsset.categoryA!.toColor(),
                       borderRadius: BorderRadius.circular(20)
                     ),
                     child: Text(widget.thisAsset.categoryA!.titleC, style: categoryText)),

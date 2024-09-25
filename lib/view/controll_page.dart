@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/bottom_nav_bar.dart';
-import 'package:flutter_application_2/controller/UserList.dart';
+import 'package:flutter_application_2/controller/user_controller.dart';
+import 'package:flutter_application_2/model/User.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/view/assets_page.dart';
 import 'package:flutter_application_2/view/dashboard_page.dart';
@@ -11,9 +12,9 @@ import 'package:flutter_application_2/view/home_page.dart';
 import 'package:provider/provider.dart';
 
 class ControllPage extends StatefulWidget {
-  String email;
+  UserDetails? currentUser;
   ControllPage({
-    required this.email,
+    required this.currentUser,
     super.key});
   @override
   State<ControllPage> createState() => _ControllPageState();
@@ -33,16 +34,13 @@ class _ControllPageState extends State<ControllPage> {
   
   @override
   void initState(){
-    setState(() {
-      emailUser = widget.email;
-      userName = Provider.of<UserList>(context, listen: false).findUserNameByEmail(widget.email);
-    });
+
 
     _pages = [
-    HomePage(username: userName ?? "oi", email: emailUser,), 
-    DashboardPage(), 
-    ExpensivesPage(),
-    AssetPage()
+      HomePage(username: widget.currentUser?.nome ?? "oi", email: widget.currentUser?.email), 
+      DashboardPage(), 
+      ExpensivesPage(),
+      AssetPage()
     ];
     super.initState();
   }

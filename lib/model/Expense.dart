@@ -2,7 +2,7 @@
 
 import 'package:flutter_application_2/model/Category.dart';
 
-class Expensive{
+class Expense{
 
 String _titleD = "";
 String _descriptD = "";
@@ -34,8 +34,19 @@ Tag? _category = null;
 
  set valueD(double value) => this._valueD = value;
 
+Expense(this._titleD,this._dateToRemember,this._valueD,this._descriptD,this._frequency,this._category);
 
-Expensive(this._titleD,this._dateToRemember,this._valueD,this._descriptD,this._frequency,this._category);
+  // Método para converter um Map em uma instância de Expense
+factory Expense.fromJson(Map<String, dynamic> json) {
+  return Expense(
+    json['nome'] ?? '', // Título da despesa
+    json['data'] ?? '', // Data da despesa
+    (json['valor'] is int) ? json['valor'].toDouble() : json['valor'] ?? 0.0, // Valor da despesa
+    json['descricao'] ?? '', // Descrição da despesa
+    json['frequencia'] ?? '', // Frequência (pode ser null)
+    Tag.fromString(json['idCategoria'] ?? ''), // Cria a Tag a partir do nome da categoria
+  );
+}
 
 
 
