@@ -41,7 +41,7 @@ factory Expense.fromJson(Map<String, dynamic> json) {
   return Expense(
     json['nome'] ?? '', // Título da despesa
     json['data'] ?? '', // Data da despesa
-    (json['valor'] is int) ? json['valor'].toDouble() : json['valor'] ?? 0.0, // Valor da despesa
+    json['valor'].toDouble(), // Valor da despesa
     json['descricao'] ?? '', // Descrição da despesa
     json['frequencia'] ?? '', // Frequência (pode ser null)
     Tag.fromString(json['idCategoria'] ?? ''), // Cria a Tag a partir do nome da categoria

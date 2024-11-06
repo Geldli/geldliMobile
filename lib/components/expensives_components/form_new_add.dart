@@ -14,7 +14,6 @@ import 'package:flutter_application_2/model/Category.dart';
 import 'package:flutter_application_2/model/Expense.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
-import 'package:provider/provider.dart';
 import 'package:drop_down_search_field/drop_down_search_field.dart';
 class FormNew extends StatefulWidget {
   FormNew({super.key});
@@ -333,7 +332,7 @@ void initState() {
 
                         ],
                       ),
-      
+            /*
                         SizedBox(height: 10),
       
                         //FREQUENCIA input
@@ -369,7 +368,7 @@ void initState() {
                             );
                           }).toList()
                         ),
-      
+        */
                         SizedBox(height: 10),
       
                         //VALUE and Tag
@@ -404,7 +403,7 @@ void initState() {
                           children: [
                             ElevatedButton(onPressed: (){
                               if(chave.currentState!.validate()){
-                                  String? frequencia = _controllerFrequency;
+                                var status;
                                   String? titulo = controllerTitle.text;
                                   String data = controllerDate.text;
                                   double valor = double.parse(controllerValue.text);
@@ -420,13 +419,16 @@ void initState() {
                                   } else {
                                     colorC = Colors.red.toString(); // Converte a cor para String
                                     tag = Tag(titleC, "blue"); // Cria a tag com cor em String
-                                    _tagExpenseController.createExpenseTag(tag, 4);
                                   }
                                   // creating expensive
-                                  Expense currentExpense = Expense(titulo, data, valor, descricao, frequencia, tag);
-                                  _expenseController.createExpense(currentExpense, 4);
+                                  Expense currentExpense = Expense(titulo, data, valor, descricao, "a", tag);
+                                  status = _expenseController.createExpense(currentExpense, 4);
+                                  if(status == 'success'){
+                                    _tagExpenseController.createExpenseTag(tag, 4);
+                                    print(status);
+                                    sucess();     
+                                  }
                                   Navigator.pop(context);
-                                  sucess();     
                               }
                             }, 
                             style: ElevatedButton.styleFrom(

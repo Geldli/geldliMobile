@@ -6,6 +6,7 @@ import 'package:flutter_application_2/model/Expense.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ExpensiveView extends StatefulWidget {
   Expense thisExpensive;
@@ -18,6 +19,10 @@ class ExpensiveView extends StatefulWidget {
 class _ExpensiveViewState extends State<ExpensiveView> {
   @override
   Widget build(BuildContext context) {
+
+    DateFormat dateFormat = DateFormat('dd/MM/yy');
+    String formattedDate = dateFormat.format(DateTime.parse(widget.thisExpensive.dateToRemember));
+
     return AlertDialog(
       alignment: AlignmentDirectional.bottomEnd,
       title: Text(widget.thisExpensive.titleD),
@@ -60,18 +65,18 @@ class _ExpensiveViewState extends State<ExpensiveView> {
                   child: Text(widget.thisExpensive.category!.titleC, style: categoryText)),
               ],
             ),
-            Row(
+           /* Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Frequência:", style: dialogH2),
                 Text(widget.thisExpensive.frequency!, style: dialogH3),
               ],
-            ),
+            ),*/
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Lembrete:", style: dialogH2),
-                Text(widget.thisExpensive.dateToRemember, style: dialogH3),
+                Text(widget.thisExpensive.dateToRemember, style: dialogH3), // Use a data formatada aqui
               ],
             ),
             Row(

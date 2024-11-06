@@ -1,20 +1,22 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable, must_be_immutable
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, unused_field, unused_local_variable
 
 import 'dart:math';
-
-import 'package:drop_down_search_field/drop_down_search_field.dart';
+import 'package:date_format_field/date_format_field.dart';
+import 'package:datetime_picker_field_platform/datetime_picker_field_platform.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_application_2/controller/asset_controller.dart';
+import 'package:flutter_application_2/controller/tag_asset_controller.dart';
+import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_2/controller/AssetList.dart';
-import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/model/Category.dart';
+import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
+import 'package:drop_down_search_field/drop_down_search_field.dart';
 class FormNewA extends StatefulWidget {
-  const FormNewA({super.key});
+  FormNewA({super.key});
 
   @override
   State<FormNewA> createState() => _FormNewAState();
@@ -30,6 +32,9 @@ class _FormNewAState extends State<FormNewA> {
 
   DateTime? selectedDate;
   final dateFormat = DateFormat('dd/MM/yyyy'); // Formato da data
+
+  AssetController _assetController = AssetController();
+  TagAssetController _tagAssetController = TagAssetController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -62,24 +67,34 @@ class _FormNewAState extends State<FormNewA> {
   SuggestionsBoxController suggestionBoxController = SuggestionsBoxController();
   List<Tag> categoryList =  [];
   static List<String> tags = [];
-  Map<String, dynamic> mapp = Map();
+  Map<String, String> mapp = Map();
 
-  @override
-  void initState(){
-    //categoryList =  Provider.of<CategoryListAsset>(context, listen: false).listCategoryExpense;
-    for(int i=0; i<categoryList.length; i++){
+
+void loadTags() async {
+  await _tagAssetController.getTagByUserId(4); // Substitua pelo ID do usuário
+  setState(() {
+    categoryList = _tagAssetController.tagAssetList;
+    print("opa" + categoryList.toString());
+    mapp.clear(); // Limpe o mapa antes de preenchê-lo novamente
+    tags.clear(); // Limpe a lista de tags antes de preenchê-la novamente
+    for (int i = 0; i < categoryList.length; i++) {
       mapp[categoryList[i].titleC] = categoryList[i].colorC;
       tags.add(categoryList[i].titleC);
     }
-    super.initState();
-  }
+  });
+}
+
+@override
+void initState() {
+  super.initState();
+  loadTags();
+}
 
   dynamic getColorForTitle(String title){
     var color;
     color = mapp[title];
     return color;
   }
-
 
   static List<String> getSuggestions(String query) {
     List<String> matches = <String>[];
@@ -89,15 +104,6 @@ class _FormNewAState extends State<FormNewA> {
     return matches;
   }
 
-  void newTag(Tag tag){
-    //Provider.of<CategoryListExpense>(context,listen: false).addCategory(tag);
-  }
-
-  void addNew(Asset Asset){
-    Provider.of<AssetList>(context,listen: false).addAsset(Asset);
-    Provider.of<AssetList>(context,listen: false).mostrar();
-  }
-
   void sucess(){
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Despesa criada!",style: TextStyle(color: myBlack)),
@@ -105,7 +111,6 @@ class _FormNewAState extends State<FormNewA> {
       backgroundColor: myDarkY,
       ));
   }
-
   @override
   Widget build(BuildContext context) {
     return 
@@ -132,7 +137,7 @@ class _FormNewAState extends State<FormNewA> {
               ),
               contentPadding: EdgeInsets.all(0),
               titlePadding: EdgeInsets.fromLTRB(20, 10, 0, 10),
-              title: Text("Nova Despesa"),
+              title: Text("Novo Ativo"),
               titleTextStyle: formHeader,
               content: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -257,7 +262,8 @@ class _FormNewAState extends State<FormNewA> {
                                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color:  getColorForTitle(suggestion)
+                                        color:  Colors.red
+                                        //getColorForTitle(suggestion)
                                       ),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -326,7 +332,7 @@ class _FormNewAState extends State<FormNewA> {
 
                         ],
                       ),
-      
+            /*
                         SizedBox(height: 10),
       
                         //FREQUENCIA input
@@ -362,7 +368,7 @@ class _FormNewAState extends State<FormNewA> {
                             );
                           }).toList()
                         ),
-      
+        */
                         SizedBox(height: 10),
       
                         //VALUE and Tag
@@ -397,31 +403,32 @@ class _FormNewAState extends State<FormNewA> {
                           children: [
                             ElevatedButton(onPressed: (){
                               if(chave.currentState!.validate()){
-                                  String? frequencia = _controllerFrequency;
-                                  String titulo = controllerTitle.text;
+                                var status;
+                                  String? titulo = controllerTitle.text;
                                   String data = controllerDate.text;
                                   double valor = double.parse(controllerValue.text);
                                   String descricao = controllerDesc.text;
-
                                   // category
                                   var tag;
-                                  int i = Random().nextInt(7);
-                                  String colorC;
-                                  String titleC = _dropdownSearchFieldController.text;
-                                  if(tags.contains(titleC)){
+                                  //int i = Random().nextInt(7);
+                                  String colorC; 
+                                  String titleC = _dropdownSearchFieldController.text.trim();
+                                  if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
                                     colorC = getColorForTitle(titleC);
                                     tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                  }else if(!tags.contains(titleC)){
-                                    colorC = "red";
-                                    tag = Tag(titleC, colorC); 
-                                    newTag(tag);         
-                                  }         
-                                  // creating Asset
-                                  Asset AssetCreating = Asset(titulo, descricao, tag, data ,frequencia!,valor);
-                                  addNew(AssetCreating);
+                                  } else {
+                                    colorC = Colors.red.toString(); // Converte a cor para String
+                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                  }
+                                  // creating expensive
+                                  Asset currentAsset = Asset(titulo, data, valor, descricao, "a", tag);
+                                  status = _assetController.createAsset(currentAsset, 4);
+                                  if(status == 'success'){
+                                    _tagAssetController.createAssetTag(tag, 4);
+                                    print(status);
+                                    sucess();     
+                                  }
                                   Navigator.pop(context);
-                                  sucess();     
-                                  double a = Provider.of<AssetList>(context,listen: false).totalAssets();
                               }
                             }, 
                             style: ElevatedButton.styleFrom(

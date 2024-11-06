@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/controller/AssetList.dart';
+import 'package:flutter_application_2/controller/asset_controller.dart';
 import 'package:flutter_application_2/controller/expense_controller.dart';
-import 'package:flutter_application_2/controller/userDatas.dart';
+import 'package:flutter_application_2/controller/user_datas.dart';
 import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
@@ -23,14 +23,17 @@ class _PanelUserHomeState extends State<PanelUserHome> {
   //var totalAssets;
   List<double> datas = [];
   ExpenseController _expenseController = ExpenseController();
+  AssetController _assetController = AssetController();
+
   final int userId = 4;
   
     Future<void> loadExpenses() async {
     try {
       await _expenseController.getExpenseByUserId(userId);
+      await _assetController.getAssetByUserId(userId);
       print('Despesas carregadas: ${_expenseController.expenseList}');
       double totalValue = _expenseController.totalExpensives();
-      double totalAssets = Provider.of<AssetList>(context, listen: false).totalAssets();
+      double totalAssets = _assetController.totalAsset();
       double patrimony = totalAssets - totalValue;
 
       setState(() {
@@ -40,6 +43,7 @@ class _PanelUserHomeState extends State<PanelUserHome> {
       print('Erro ao carregar despesas: $e');
     }
   }
+
 
   @override
   void initState(){

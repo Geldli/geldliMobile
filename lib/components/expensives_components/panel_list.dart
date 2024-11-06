@@ -42,8 +42,12 @@ class _PanelListState extends State<PanelList> {
 Future<void> loadExpenses() async {
   try {
     await _expenseController.getExpenseByUserId(userId);
-    print('Despesas carregadas: ${_expenseController.expenseList}'); // Verifique o que está sendo carregado
-    setState(() {
+    print("Despesaitas:");
+        _expenseController.expenseList.forEach((element) {
+          print(element.titleD);
+        });
+     // Verifiq
+      setState(() {
       response = _expenseController.expenseList;
       totalValue = _expenseController.totalExpensives();
     });
@@ -101,12 +105,16 @@ void getExpensivesByQuery() {
               SizedBox(height: 10),
               ListTag(onCategorySelected: handleCategorySelected),
               SizedBox(height: 10),
-              Container(
-                width: 100,
-               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10), 
-                decoration: BoxDecoration(
-                  border: Border.all(color: myWhite,width: 2),borderRadius: BorderRadius.circular(10) ),
-                child: Text("R\$" + totalValue.toStringAsFixed(2), style: TextStyle(color: myWhite, fontSize: 16, fontWeight: FontWeight.bold),)),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20), 
+                  decoration: BoxDecoration(
+                    border: Border.all(color: myWhite,width: 2),borderRadius: BorderRadius.circular(10) ),
+                  child: Text("R\$ " + totalValue.toStringAsFixed(2), style: TextStyle(color: myWhite, fontSize: 16, fontWeight: FontWeight.bold),)),
+              ),
               // barra de pesquisa
               SizedBox(height: 10),
               Row(
@@ -138,7 +146,7 @@ void getExpensivesByQuery() {
                     onPressed: (){
                       
                       query.text = "";
-                      response.clear();
+                      response = _expenseController.expenseList;
                       totalValue = _expenseController.totalExpensives();
                       setState(() {
                         
@@ -181,11 +189,11 @@ void getExpensivesByQuery() {
                           onSelected: (value) {
                             if(value == "delete"){
                              _expenseController.delete(4, thisExpense.titleD);
-                             loadExpenses();
                             }  
                             setState(() {
-                              
-                            });
+                              response.remove(thisExpense);
+                              totalValue = _expenseController.totalExpensives();                            
+                              });
                           },
                           itemBuilder: (BuildContext context){
                             return const [

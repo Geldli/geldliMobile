@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/dashboard/bar_chart_asset_expense.dart';
+import 'package:flutter_application_2/controller/expense_controller.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -10,6 +11,14 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+
+  ExpenseController _expenseController = ExpenseController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter_application_2/model/Expense.dart';
+import 'package:flutter_application_2/model/Asset.dart';
 import 'package:intl/intl.dart';
 
 
@@ -10,42 +10,38 @@ class toGetId {
   toGetId({required this.id,required this.title});
 }
 
-class ExpenseController{
-  String baseUrl = "http://localhost:3000/api/v1/expense";
+class AssetController{
+  String baseUrl = "http://localhost:3000/api/v1/asset";
   Dio dio = Dio();
 
-  List<Expense> expenseList = [];
+  List<Asset> assetList = [];
 
   // 
-Future<String> createExpense(Expense expense, int id_user) async {
+Future<String> createAsset(Asset asset, int id_user) async {
     var url = '$baseUrl/create';
 
-      String dataString = "06/09/2024";
+          String dataString = "06/09/2024";
   DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
   DateTime data = formatoEntrada.parse(dataString);
   
   DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
   String dataFormatada = formatoSaida.format(data);
-
-    if(expense.dateToRemember == ""){
-      dataFormatada = "2024-09-25";
+  
+    if(asset.dateToRemember == ""){
+      asset.dateToRemember = "2024-09-25";
     }
-        if(expense.descriptD == ""){
-      expense.descriptD = " ";
+        if(asset.descriptD == ""){
+      asset.descriptD = " ";
     }
-    print(expense.dateToRemember 
-    + expense.titleD + 
-    expense.valueD.toString(),
-    );
     try {
         final response = await dio.post(
             url,
             data: jsonEncode(<String, dynamic>{
                 'data': dataFormatada,
-                'valor': expense.valueD,
-                'name': expense.titleD,
-                'description': expense.descriptD,
-                'idCategory': expense.category!.titleC,
+                'valor': asset.valueD,
+                'name': asset.titleD,
+                'description': asset.descriptD,
+                'idCategory': asset.category!.titleC,
                 'idUser': id_user,
             }),
             options: Options(
@@ -68,15 +64,15 @@ Future<String> createExpense(Expense expense, int id_user) async {
 }
 
 
-  // getExpenses
-Future<void> getExpenseByUserId(int id_user) async {
+  // getAssets
+Future<void> getAssetByUserId(int id_user) async {
   var url = '$baseUrl/getByUserId/$id_user';
   try {
     final response = await dio.get(url);
     if (response.statusCode == 200) {
-      // Converta cada item da resposta em uma instância de Expense
-      expenseList = (response.data as List)
-          .map((expenseData) => Expense.fromJson(expenseData))
+      // Converta cada item da resposta em uma instância de Asset
+      assetList = (response.data as List)
+          .map((assetData) => Asset.fromJson(assetData))
           .toList();
     }
   } catch (e) {
@@ -133,14 +129,14 @@ Future<void> delete(int id_user, String title) async {
 }
 
   // getByTag
-  Future<List<Expense>> getByCategory(int id_user, String category) async {
+  Future<List<Asset>> getByCategory(int id_user, String category) async {
   var url = '$baseUrl/getByUserAndCategory/$id_user/$category';
-  List<Expense> responseData = [];
+  List<Asset> responseData = [];
   try {
     final response = await dio.get(url);
     if (response.statusCode == 200) {
       responseData = (response.data as List)
-          .map((expenseData) => Expense.fromJson(expenseData))
+          .map((assetData) => Asset.fromJson(assetData))
           .toList();
       print('Despesas filtradas: $responseData');
     }
@@ -151,14 +147,13 @@ Future<void> delete(int id_user, String title) async {
 }
 
 
-  double totalExpensives(){
+  double totalAsset(){
     double total = 0;
-    for(Expense thisExpensive in expenseList){
-        total += thisExpensive.valueD;
+    for(Asset thisAsset in assetList){
+        total += thisAsset.valueD;
       }
-      print('despesas: $total');
+      print('asset: $total');
       return total;
     }
   
-
 }
