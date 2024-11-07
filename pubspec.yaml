@@ -55,6 +55,7 @@ dependencies:
   dio: ^5.7.0
   pie_chart: ^5.4.0
   fl_chart: ^0.69.0
+  dio_web_adapter: ^2.0.0
 
 dev_dependencies:
   flutter_test:

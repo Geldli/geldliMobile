@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:dio/browser.dart';
 import 'package:flutter_application_2/model/User.dart';
-import 'dart:html' as html;
+import 'dart:html';
 
 
 class UserDetails {
@@ -32,7 +33,7 @@ class UserController {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Access-Control-Allow-Credentials': 'true',
-            'Authorization': 'Bearer ${html.window.localStorage['authToken']}', 
+            // 'Authorization': 'Bearer ${html.window.localStorage['authToken']}', 
           },
         ),
       );
@@ -51,6 +52,10 @@ class UserController {
   }
 
 Future<UserDetails?> login(String login, String pass) async {
+  final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+  adapter.withCredentials = true;
+  dio.httpClientAdapter = adapter;
+
   var url = '$baseUrl/login';
   try {
     final response = await dio.post(
@@ -61,7 +66,7 @@ Future<UserDetails?> login(String login, String pass) async {
       }),
       options: Options(
         headers: <String, String>{
-          'Authorization': 'Bearer ${html.window.localStorage['authToken']}',
+          // 'Authorization': 'Bearer ${html.window.localStorage['authToken']}',
           'Content-Type': 'application/json; charset=UTF-8',
         },
       ),
@@ -69,6 +74,13 @@ Future<UserDetails?> login(String login, String pass) async {
 
     var responseData = response.data;
     var control = responseData['loginSuccessful'];
+
+    print(response.statusCode);
+    print(responseData['loginSuccessful']);
+    print(control);
+
+    testCookie();
+
 
     if (response.statusCode == 200 && control == true) {
       // Se o login for bem-sucedido, chama o método para obter os detalhes do usuário
@@ -82,8 +94,29 @@ Future<UserDetails?> login(String login, String pass) async {
   }
 }
 
+Future<UserDetails?> testCookie() async {
+  final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+  adapter.withCredentials = true;
+  dio.httpClientAdapter = adapter;
+
+  var url = '$baseUrl/getUserData';
+  try {
+    final response = await dio.post(url);
+
+    print(response);
+  } catch (e) {
+    print('Erro: $e');
+    return null; // Retorna null em caso de exceção
+  }
+
+}
 
 Future<UserDetails?> getUserByLogin(String login) async {
+
+  final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+  adapter.withCredentials = true;
+  dio.httpClientAdapter = adapter;
+
   var url = '$baseUrl/getAll';
   try {
     final response = await dio.get(url);
