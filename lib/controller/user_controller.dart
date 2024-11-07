@@ -18,6 +18,10 @@ class UserController {
   Dio dio = Dio();
 
   Future<String> createUser(User user) async {
+    final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+    adapter.withCredentials = true;
+    dio.httpClientAdapter = adapter;
+
     var url = '$baseUrl/create';
     try {
       final response = await dio.post(
@@ -55,7 +59,7 @@ Future<UserDetails?> login(String login, String pass) async {
   final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
   adapter.withCredentials = true;
   dio.httpClientAdapter = adapter;
-
+  print("login");
   var url = '$baseUrl/login';
   try {
     final response = await dio.post(

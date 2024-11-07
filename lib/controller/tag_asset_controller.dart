@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/browser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_2/model/Category.dart';
 import 'package:flutter_application_2/model/Expense.dart';
@@ -12,6 +13,9 @@ class TagAssetController{
   // add
 Future<String> createAssetTag(Tag tag, int id_user) async {
   var url = '$baseUrl/create';
+        final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+        adapter.withCredentials = true;
+        dio.httpClientAdapter = adapter;
   try {
     final response = await dio.post(
       url,

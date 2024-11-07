@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/browser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_2/model/Category.dart';
 import 'package:flutter_application_2/model/Expense.dart';
@@ -12,11 +13,14 @@ class TagExpenseController{
   // add
 Future<String> createExpenseTag(Tag tag, int id_user) async {
   var url = '$baseUrl/create';
+          final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+        adapter.withCredentials = true;
+        dio.httpClientAdapter = adapter;
   try {
     final response = await dio.post(
       url,
       data: jsonEncode(<String, dynamic>{
-        'idUser': id_user,
+        'idUser': id_user.toInt(),
         'color': tag.colorC, // Mantenha como string
         'name': tag.titleC,
       }),

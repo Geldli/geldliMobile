@@ -97,9 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                         String pass = controllPass.text;
                         userDetails = await _userController.login(login, pass);
                           if (userDetails != null) {
-                                  // Aqui você pode usar o userId conforme necessário
-                                  print('User ID: $userDetails');
-                                  sucess(); // Chama a função de sucesso
+                                  print('User ID:' + userDetails!.id.toString());
+                                  sucess(); 
                                 } else {
                                   invalidLogin(); // Chama a função de falha
                                 }                 

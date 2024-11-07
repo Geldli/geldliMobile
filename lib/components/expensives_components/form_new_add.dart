@@ -413,18 +413,19 @@ void initState() {
                                   //int i = Random().nextInt(7);
                                   String colorC; 
                                   String titleC = _dropdownSearchFieldController.text.trim();
-                                  if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
-                                    colorC = getColorForTitle(titleC);
-                                    tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                  } else {
-                                    colorC = Colors.red.toString(); // Converte a cor para String
-                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
-                                  }
+                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                 // if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
+                                //    colorC = getColorForTitle(titleC);
+                                 //   tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
+                                 // } else {
+                                    //colorC = Colors.red.toString(); // Converte a cor para String
+                                 // }
                                   // creating expensive
                                   Expense currentExpense = Expense(titulo, data, valor, descricao, "a", tag);
                                   status = _expenseController.createExpense(currentExpense, 4);
+                                                _tagExpenseController.createExpenseTag(tag, 4);
+
                                   if(status == 'success'){
-                                    _tagExpenseController.createExpenseTag(tag, 4);
                                     print(status);
                                     sucess();     
                                   }

@@ -423,8 +423,8 @@ void initState() {
                                   // creating expensive
                                   Asset currentAsset = Asset(titulo, data, valor, descricao, "a", tag);
                                   status = _assetController.createAsset(currentAsset, 4);
+                                  _tagAssetController.createAssetTag(tag, 4);
                                   if(status == 'success'){
-                                    _tagAssetController.createAssetTag(tag, 4);
                                     print(status);
                                     sucess();     
                                   }

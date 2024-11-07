@@ -190,6 +190,9 @@ void getExpensivesByQuery() {
                             if(value == "delete"){
                              _expenseController.delete(4, thisExpense.titleD);
                             }  
+                            if(value == "edit"){
+                             _expenseController.edit(thisExpense, 4);
+                            }  
                             setState(() {
                               response.remove(thisExpense);
                               totalValue = _expenseController.totalExpensives();                            
@@ -197,6 +200,11 @@ void getExpensivesByQuery() {
                           },
                           itemBuilder: (BuildContext context){
                             return const [
+                              PopupMenuItem(
+                                child: Text("Editar"),
+                                value: 'edit',
+                                height: 35,
+                              ),
                               PopupMenuItem(
                                 child: Text("Excluir"),
                                 value: 'delete',

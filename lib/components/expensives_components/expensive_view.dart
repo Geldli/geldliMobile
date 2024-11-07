@@ -76,7 +76,7 @@ class _ExpensiveViewState extends State<ExpensiveView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Lembrete:", style: dialogH2),
-                Text(widget.thisExpensive.dateToRemember, style: dialogH3), // Use a data formatada aqui
+                Text(formattedDate, style: dialogH3), // Use a data formatada aqui
               ],
             ),
             Row(

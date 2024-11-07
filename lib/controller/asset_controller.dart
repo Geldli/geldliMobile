@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/browser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_2/model/Asset.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +21,11 @@ class AssetController{
 Future<String> createAsset(Asset asset, int id_user) async {
     var url = '$baseUrl/create';
 
-          String dataString = "06/09/2024";
+    final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+    adapter.withCredentials = true;
+    dio.httpClientAdapter = adapter; 
+
+  String dataString = "06/09/2024";
   DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
   DateTime data = formatoEntrada.parse(dataString);
   
@@ -38,11 +43,11 @@ Future<String> createAsset(Asset asset, int id_user) async {
             url,
             data: jsonEncode(<String, dynamic>{
                 'data': dataFormatada,
-                'valor': asset.valueD,
+                'valor': asset.valueD.toDouble(),
                 'name': asset.titleD,
                 'description': asset.descriptD,
                 'idCategory': asset.category!.titleC,
-                'idUser': id_user,
+                'idUser': id_user.toInt(),
             }),
             options: Options(
                 headers: <String, String>{
