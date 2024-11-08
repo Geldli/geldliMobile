@@ -17,28 +17,33 @@ class AssetController{
 
   List<Asset> assetList = [];
 
-  // 
 Future<String> createAsset(Asset asset, int id_user) async {
+
     var url = '$baseUrl/create';
 
-    final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
-    adapter.withCredentials = true;
-    dio.httpClientAdapter = adapter; 
+      String dataString = asset.dateToRemember;
+      DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
+      DateTime data = formatoEntrada.parse(dataString);
+      
+      DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
+      String dataFormatada = formatoSaida.format(data);
 
-  String dataString = "06/09/2024";
-  DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
-  DateTime data = formatoEntrada.parse(dataString);
-  
-  DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
-  String dataFormatada = formatoSaida.format(data);
-  
     if(asset.dateToRemember == ""){
-      asset.dateToRemember = "2024-09-25";
+      dataFormatada = "2024-09-25";
     }
-        if(asset.descriptD == ""){
+    if(asset.descriptD == ""){
       asset.descriptD = " ";
     }
+    print(asset.dateToRemember 
+    + asset.titleD + 
+    asset.valueD.toString(),
+    );
+
+        final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+        adapter.withCredentials = true;
+        dio.httpClientAdapter = adapter;
     try {
+      
         final response = await dio.post(
             url,
             data: jsonEncode(<String, dynamic>{
@@ -68,28 +73,58 @@ Future<String> createAsset(Asset asset, int id_user) async {
     }
 }
 
-
   // getAssets
 Future<void> getAssetByUserId(int id_user) async {
   var url = '$baseUrl/getByUserId/$id_user';
+  toGetId a;
+  List<toGetId> titleToIdList;
+
   try {
     final response = await dio.get(url);
     if (response.statusCode == 200) {
-      // Converta cada item da resposta em uma instância de Asset
       assetList = (response.data as List)
           .map((assetData) => Asset.fromJson(assetData))
           .toList();
-    }
+        }
   } catch (e) {
     print('Erro: $e');
   }
 }
 
+  // getIdByTitle
+Future<int> getId(int id_user, String title) async {
+  var url = '$baseUrl/getByUserId/$id_user';
+  toGetId a;
+  int id_asset = 0;
+  List<toGetId> titleToIdList = [];
+  try {
+    final response = await dio.get(url);
+    if (response.statusCode == 200) {
+      titleToIdList = (response.data as List)
+          .map((assetData) => toGetId(
+                id: assetData['id'],    // Pegando o id da resposta
+                title: assetData['nome'], // Pegando o nome (title) da resposta
+              ))
+          .toList();
+          
+        }
+      for (var element in titleToIdList) {
+        if(element.title == title){
+          id_asset = element.id;
+          print("o ID EH:" + element.id.toString());
+        }
+      }
+  } catch (e) {
+    print('Erro: $e');
+  }
+
+  return id_asset;
+}
 
   // delete
 Future<void> delete(int id_user, String title) async {
   var url2 = '$baseUrl/getByUserId/$id_user';
-  int? id; // Declarado como int? para permitir null
+  int? id;
 
   List<toGetId> idList = [];
 
@@ -98,8 +133,8 @@ Future<void> delete(int id_user, String title) async {
     if (response.statusCode == 200) {
       idList = (response.data as List).map((data) {
         return toGetId(
-          id: data['id'], // Supondo que 'id' está presente no JSON
-          title: data['nome'], // Supondo que 'name' está presente no JSON
+          id: data['id'], 
+          title: data['nome'], 
         );
       }).toList();
 
@@ -133,6 +168,7 @@ Future<void> delete(int id_user, String title) async {
   }
 }
 
+
   // getByTag
   Future<List<Asset>> getByCategory(int id_user, String category) async {
   var url = '$baseUrl/getByUserAndCategory/$id_user/$category';
@@ -154,11 +190,74 @@ Future<void> delete(int id_user, String title) async {
 
   double totalAsset(){
     double total = 0;
-    for(Asset thisAsset in assetList){
-        total += thisAsset.valueD;
+    for(Asset thisExpensive in assetList){
+        total += thisExpensive.valueD;
       }
-      print('asset: $total');
+      print('assets: $total');
       return total;
     }
   
+
+
+
+Future<String> edit(Asset asset, String nome) async {
+  var url = '$baseUrl/update';
+
+  String dataString = asset.dateToRemember;
+  
+  DateTime data = DateTime.parse(dataString); // Aqui usamos DateTime.parse() diretamente
+  DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
+  String dataFormatada = formatoSaida.format(data);
+
+  if (asset.dateToRemember == "") {
+    dataFormatada = "2024-09-25"; // Fallback para uma data padrão caso a data esteja vazia
+  }
+  if (asset.descriptD == "") {
+    asset.descriptD = " "; // Se a descrição estiver vazia, atribui um valor padrão
+  }
+
+  print(asset.dateToRemember +
+      asset.titleD +
+      asset.valueD.toString(),
+  );
+
+  final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+  adapter.withCredentials = true;
+  dio.httpClientAdapter = adapter;
+  int id;
+  id = await getId(3, nome);
+  try {
+    print("idas" + id.toString());
+    final response = await dio.put(
+      url,
+      data: jsonEncode(<String, dynamic>{
+        'id': id, // Aqui você pode substituir pelo ID correto, se necessário
+        'data': dataFormatada,
+        'valor': asset.valueD.toDouble(),
+        'name': asset.titleD, // Substitua pelo nome correto
+        'description': asset.descriptD,
+        'idCategory': asset.category!.titleC,
+      }),
+      options: Options(
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      print('Despesa alterada com sucesso!');
+      return 'success';
+    } else {
+      print('Erro: ${response.statusCode}, ${response.data}');
+      return 'error';
+    }
+  } catch (e) {
+    print('Erro ao alterar despesa: $e');
+    return 'error';
+  }
+}
+
+
+
 }

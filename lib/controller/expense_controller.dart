@@ -21,7 +21,7 @@ Future<String> createExpense(Expense expense, int id_user) async {
 
     var url = '$baseUrl/create';
 
-      String dataString = "06/09/2024";
+      String dataString = expense.dateToRemember;
       DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
       DateTime data = formatoEntrada.parse(dataString);
       
@@ -73,66 +73,52 @@ Future<String> createExpense(Expense expense, int id_user) async {
     }
 }
 
-
-Future<String> edit(Expense expense, int id) async {
-  var url = '$baseUrl/update'; 
-
-  String dataString = expense.dateToRemember; 
-  DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
-  DateTime data = formatoEntrada.parse(dataString);
-  DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
-  String dataFormatada = formatoSaida.format(data);
-
-  if (expense.descriptD == "") {
-    expense.descriptD = " "; 
-  }
-
-  try {
-    final response = await dio.put(
-      url,
-      data: jsonEncode(<String, dynamic>{
-        'id': id, //
-        'data': dataFormatada,
-        'valor': expense.valueD.toDouble(),
-        'name': expense.titleD,
-        'description': expense.descriptD,
-        'idCategory': expense.category!.titleC,
-      }),
-      options: Options(
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      print('Despesa atualizada com sucesso!');
-      return 'success';
-    } else {
-      print('Erro: ${response.statusCode}, ${response.data}');
-      return 'error';
-    }
-  } catch (e) {
-    print('Erro ao atualizar despesa: $e');
-    return 'error';
-  }
-}
-
-
   // getExpenses
 Future<void> getExpenseByUserId(int id_user) async {
   var url = '$baseUrl/getByUserId/$id_user';
+  toGetId a;
+  List<toGetId> titleToIdList;
+
   try {
     final response = await dio.get(url);
     if (response.statusCode == 200) {
-      // Converta cada item da resposta em uma instância de Expense
       expenseList = (response.data as List)
           .map((expenseData) => Expense.fromJson(expenseData))
           .toList();
-    }
+        }
   } catch (e) {
     print('Erro: $e');
   }
+}
+
+  // getIdByTitle
+Future<int> getId(int id_user, String title) async {
+  var url = '$baseUrl/getByUserId/$id_user';
+  toGetId a;
+  int id_expense = 0;
+  List<toGetId> titleToIdList = [];
+  try {
+    final response = await dio.get(url);
+    if (response.statusCode == 200) {
+      titleToIdList = (response.data as List)
+          .map((expenseData) => toGetId(
+                id: expenseData['id'],    // Pegando o id da resposta
+                title: expenseData['nome'], // Pegando o nome (title) da resposta
+              ))
+          .toList();
+          
+        }
+      for (var element in titleToIdList) {
+        if(element.title == title){
+          id_expense = element.id;
+          print("o ID EH:" + element.id.toString());
+        }
+      }
+  } catch (e) {
+    print('Erro: $e');
+  }
+
+  return id_expense;
 }
 
   // delete
@@ -147,8 +133,8 @@ Future<void> delete(int id_user, String title) async {
     if (response.statusCode == 200) {
       idList = (response.data as List).map((data) {
         return toGetId(
-          id: data['id'], // Supondo que 'id' está presente no JSON
-          title: data['nome'], // Supondo que 'name' está presente no JSON
+          id: data['id'], 
+          title: data['nome'], 
         );
       }).toList();
 
@@ -211,5 +197,67 @@ Future<void> delete(int id_user, String title) async {
       return total;
     }
   
+
+
+
+Future<String> edit(Expense expense, String nome) async {
+  var url = '$baseUrl/update';
+
+  String dataString = expense.dateToRemember;
+  
+  DateTime data = DateTime.parse(dataString); // Aqui usamos DateTime.parse() diretamente
+  DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
+  String dataFormatada = formatoSaida.format(data);
+
+  if (expense.dateToRemember == "") {
+    dataFormatada = "2024-09-25"; // Fallback para uma data padrão caso a data esteja vazia
+  }
+  if (expense.descriptD == "") {
+    expense.descriptD = " "; // Se a descrição estiver vazia, atribui um valor padrão
+  }
+
+  print(expense.dateToRemember +
+      expense.titleD +
+      expense.valueD.toString(),
+  );
+
+  final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+  adapter.withCredentials = true;
+  dio.httpClientAdapter = adapter;
+  int id;
+  id = await getId(3, nome);
+  try {
+    print("idas" + id.toString());
+    final response = await dio.put(
+      url,
+      data: jsonEncode(<String, dynamic>{
+        'id': id, // Aqui você pode substituir pelo ID correto, se necessário
+        'data': dataFormatada,
+        'valor': expense.valueD.toDouble(),
+        'name': expense.titleD, // Substitua pelo nome correto
+        'description': expense.descriptD,
+        'idCategory': expense.category!.titleC,
+      }),
+      options: Options(
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      print('Despesa alterada com sucesso!');
+      return 'success';
+    } else {
+      print('Erro: ${response.statusCode}, ${response.data}');
+      return 'error';
+    }
+  } catch (e) {
+    print('Erro ao alterar despesa: $e');
+    return 'error';
+  }
+}
+
+
 
 }

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/components/expensives_components/expensive_view.dart';
+import 'package:flutter_application_2/components/expensives_components/form_new_add.dart';
+import 'package:flutter_application_2/components/expensives_components/form_update.dart';
 import 'package:flutter_application_2/components/expensives_components/list_tags.dart';
 import 'package:flutter_application_2/controller/expense_controller.dart';
 import 'package:flutter_application_2/controller/tag_expense_controller.dart';
@@ -25,18 +27,18 @@ class _PanelListState extends State<PanelList> {
 
   ExpenseController _expenseController = ExpenseController();
   TagExpenseController _tagExpenseController = TagExpenseController();
-
+  int idExpense = 30;
   TextEditingController query = TextEditingController();
   List<Expense> response = [];
   var controller = 0;
-
-  final int userId = 4;
+  final int userId = 3;
  @override
   
-  void initState() {
+  initState() {
     super.initState();
     // Carregar despesas quando o widget é inicializado
     loadExpenses();
+    
   }
 
 Future<void> loadExpenses() async {
@@ -91,6 +93,7 @@ void getExpensivesByQuery() {
     totalValue = filteredExpenses.fold(0, (sum, expense) => sum + expense.valueD); // Atualiza o total
   });
 }
+
   
   Tag? selectedCategory;
 
@@ -186,22 +189,26 @@ void getExpensivesByQuery() {
                         leading: PopupMenuButton(
                           iconColor: myWhite,
                           color: myWhite,
-                          onSelected: (value) {
+                          onSelected: (value) async {
                             if(value == "delete"){
-                             _expenseController.delete(4, thisExpense.titleD);
-                            }  
-                            if(value == "edit"){
-                             _expenseController.edit(thisExpense, 4);
-                            }  
+                             _expenseController.delete(3, thisExpense.titleD);
                             setState(() {
                               response.remove(thisExpense);
                               totalValue = _expenseController.totalExpensives();                            
                               });
+                            }  
+                            if(value == "edit"){
+                             //_expenseController.edit(thisExpense, idExpense);
+                             setState(() {
+                               
+                             });
+                            }  
+
                           },
                           itemBuilder: (BuildContext context){
-                            return const [
+                            return [
                               PopupMenuItem(
-                                child: Text("Editar"),
+                                child: FormNewUp(expense: thisExpense, id_expense: thisExpense.titleD),
                                 value: 'edit',
                                 height: 35,
                               ),

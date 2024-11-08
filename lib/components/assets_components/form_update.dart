@@ -15,21 +15,22 @@ import 'package:flutter_application_2/model/Asset.dart';
 import 'package:flutter_application_2/ui/colors.dart';
 import 'package:flutter_application_2/ui/text.dart';
 import 'package:drop_down_search_field/drop_down_search_field.dart';
-class FormNewA extends StatefulWidget {
-  FormNewA({super.key});
+class FormNewUpA extends StatefulWidget {
+  String? id_asset; 
+  Asset? asset;
+  FormNewUpA({this.id_asset,this.asset,super.key});
 
   @override
-  State<FormNewA> createState() => _FormNewAState();
+  State<FormNewUpA> createState() => _FormNewUpAState();
 }
 
-class _FormNewAState extends State<FormNewA> {
+class _FormNewUpAState extends State<FormNewUpA> {
   GlobalKey<FormState> chave = GlobalKey();
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
   TextEditingController controllerDate = TextEditingController();
   TextEditingController controllerValue = TextEditingController();
   TextEditingController controllerTag = TextEditingController();
-
   DateTime? selectedDate;
   final dateFormat = DateFormat('dd/MM/yyyy'); // Formato da data
 
@@ -60,8 +61,6 @@ class _FormNewAState extends State<FormNewA> {
   }
   
   DateTime? data;
-  String? _controllerFrequency;
-  List<String> frequencyItems = ["1","2","3"];
   final TextEditingController _dropdownSearchFieldController = TextEditingController();
   String? _selectedFruit;
   SuggestionsBoxController suggestionBoxController = SuggestionsBoxController();
@@ -71,7 +70,7 @@ class _FormNewAState extends State<FormNewA> {
 
 
 void loadTags() async {
-  await _tagAssetController.getTagByUserId(4); // Substitua pelo ID do usuário
+  await _tagAssetController.getTagByUserId(3); // Substitua pelo ID do usuário
   setState(() {
     categoryList = _tagAssetController.tagAssetList;
     print("opa" + categoryList.toString());
@@ -88,6 +87,11 @@ void loadTags() async {
 void initState() {
   super.initState();
   loadTags();
+    controllerTitle.text = widget.asset!.titleD;
+    controllerDesc.text = widget.asset!.descriptD;
+    controllerDate.text = widget.asset!.dateToRemember;
+    controllerValue.text  = widget.asset!.valueD.toStringAsFixed(2);
+    _dropdownSearchFieldController.text = widget.asset!.category!.titleC;
 }
 
   dynamic getColorForTitle(String title){
@@ -137,7 +141,7 @@ void initState() {
               ),
               contentPadding: EdgeInsets.all(0),
               titlePadding: EdgeInsets.fromLTRB(20, 10, 0, 10),
-              title: Text("Novo Ativo"),
+              title: Text("Despesa"),
               titleTextStyle: formHeader,
               content: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -332,43 +336,7 @@ void initState() {
 
                         ],
                       ),
-            /*
-                        SizedBox(height: 10),
-      
-                        //FREQUENCIA input
-                        DropdownButtonFormField<String>(
-                          dropdownColor: myDarkY,
-                          elevation: 0,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                            filled: true,
-                            fillColor: myBlack,
-                            isCollapsed: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: myDarkY, width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),                          
-                          ),
-                          hint: Text('Frequência', style: hintForm,),
-                          value: _controllerFrequency,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _controllerFrequency = newValue!;
-                            });
-                          },
-                          items: <String>['Anualmente', 'Todo mês', 'Gasto único']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,style: formTextStyle),
-                            );
-                          }).toList()
-                        ),
-        */
+            
                         SizedBox(height: 10),
       
                         //VALUE and Tag
@@ -401,7 +369,7 @@ void initState() {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            ElevatedButton(onPressed: (){
+                            ElevatedButton(onPressed: () async {
                               if(chave.currentState!.validate()){
                                 var status;
                                   String? titulo = controllerTitle.text;
@@ -413,28 +381,32 @@ void initState() {
                                   //int i = Random().nextInt(7);
                                   String colorC; 
                                   String titleC = _dropdownSearchFieldController.text.trim();
-                                  if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
-                                    colorC = getColorForTitle(titleC);
-                                    tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                  } else {
-                                    colorC = Colors.red.toString(); // Converte a cor para String
-                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
-                                  }
+                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                 // if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
+                                //    colorC = getColorForTitle(titleC);
+                                 //   tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
+                                 // } else {
+                                    //colorC = Colors.red.toString(); // Converte a cor para String
+                                 // }
                                   // creating expensive
                                   Asset currentAsset = Asset(titulo, data, valor, descricao, "a", tag);
-                                  status = _assetController.createAsset(currentAsset, 3);
-                                  _tagAssetController.createAssetTag(tag,34);
-                                  if(status == 'success'){
-                                    print(status);
-                                    sucess();     
+                                  String result = await _assetController.edit(currentAsset, widget.id_asset!);
+                                  if (result == 'success') {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Despesa atualizada com sucesso!')));
                                   }
+                                  else {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao criar/atualizar despesa')));
+                                  }
+ 
                                   Navigator.pop(context);
                               }
-                            }, 
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: myDarkY
                             ),
-                            child: Text("CRIAR"))
+                            child: Text("EDITAR")
+                            
+                            )
                           ],
                         )                   
                       ],
@@ -453,7 +425,8 @@ void initState() {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            Text("ADICIONAR ",style: buttomText),
+            
+          Text("ATUALIZAR ",style: buttomText),
             Icon(Icons.add_rounded,color: myBlue,weight: 6),
         ],
       )));

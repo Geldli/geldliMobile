@@ -29,7 +29,7 @@ class _FormNewState extends State<FormNew> {
   TextEditingController controllerDate = TextEditingController();
   TextEditingController controllerValue = TextEditingController();
   TextEditingController controllerTag = TextEditingController();
-
+  int modo = 1; // modo = 1 -> add modo = 2 -> apdate
   DateTime? selectedDate;
   final dateFormat = DateFormat('dd/MM/yyyy'); // Formato da data
 
@@ -60,8 +60,6 @@ class _FormNewState extends State<FormNew> {
   }
   
   DateTime? data;
-  String? _controllerFrequency;
-  List<String> frequencyItems = ["1","2","3"];
   final TextEditingController _dropdownSearchFieldController = TextEditingController();
   String? _selectedFruit;
   SuggestionsBoxController suggestionBoxController = SuggestionsBoxController();
@@ -71,7 +69,7 @@ class _FormNewState extends State<FormNew> {
 
 
 void loadTags() async {
-  await _tagExpenseController.getTagByUserId(4); // Substitua pelo ID do usuário
+  await _tagExpenseController.getTagByUserId(3); // Substitua pelo ID do usuário
   setState(() {
     categoryList = _tagExpenseController.tagExpenseList;
     print("opa" + categoryList.toString());
@@ -86,7 +84,7 @@ void loadTags() async {
 
 @override
 void initState() {
-  super.initState();
+  super.initState;
   loadTags();
 }
 
@@ -332,43 +330,7 @@ void initState() {
 
                         ],
                       ),
-            /*
-                        SizedBox(height: 10),
-      
-                        //FREQUENCIA input
-                        DropdownButtonFormField<String>(
-                          dropdownColor: myDarkY,
-                          elevation: 0,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                            filled: true,
-                            fillColor: myBlack,
-                            isCollapsed: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: myDarkY, width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),                          
-                          ),
-                          hint: Text('Frequência', style: hintForm,),
-                          value: _controllerFrequency,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _controllerFrequency = newValue!;
-                            });
-                          },
-                          items: <String>['Anualmente', 'Todo mês', 'Gasto único']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,style: formTextStyle),
-                            );
-                          }).toList()
-                        ),
-        */
+            
                         SizedBox(height: 10),
       
                         //VALUE and Tag
@@ -401,7 +363,7 @@ void initState() {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            ElevatedButton(onPressed: (){
+                            ElevatedButton(onPressed: () async {
                               if(chave.currentState!.validate()){
                                 var status;
                                   String? titulo = controllerTitle.text;
@@ -413,29 +375,35 @@ void initState() {
                                   //int i = Random().nextInt(7);
                                   String colorC; 
                                   String titleC = _dropdownSearchFieldController.text.trim();
-                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
-                                 // if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
-                                //    colorC = getColorForTitle(titleC);
-                                 //   tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                 // } else {
-                                    //colorC = Colors.red.toString(); // Converte a cor para String
-                                 // }
-                                  // creating expensive
-                                  Expense currentExpense = Expense(titulo, data, valor, descricao, "a", tag);
-                                  status = _expenseController.createExpense(currentExpense, 4);
-                                                _tagExpenseController.createExpenseTag(tag, 4);
+                                                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                  if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
+                                    colorC = getColorForTitle(titleC);
+                                    tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
+                                  _tagExpenseController.createExpenseTag(tag, 3);
 
-                                  if(status == 'success'){
-                                    print(status);
-                                    sucess();     
+                                  } else {
+                                  colorC = Colors.red.toString(); // Converte a cor para String
+                                 }
+                                  // creating expensive
+                                  Expense currentExpense = Expense(titulo, data, valor.toDouble(), descricao, "a", tag);
+                                  String result = await _expenseController.createExpense(currentExpense, 3); // Passando o id do usuário como exemplo
+
+                                  if (result == 'success') {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Despesa criada com sucesso!')));
                                   }
+                                  else {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao criar/atualizar despesa')));
+                                  }
+                                    
                                   Navigator.pop(context);
                               }
-                            }, 
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: myDarkY
                             ),
-                            child: Text("CRIAR"))
+                            child: 1 == 1 ? Text("CRIAR") : Text("CRIAR")
+                            
+                            )
                           ],
                         )                   
                       ],
@@ -454,7 +422,8 @@ void initState() {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            Text("ADICIONAR ",style: buttomText),
+            
+          Text("ADICIONAR ",style: buttomText),
             Icon(Icons.add_rounded,color: myBlue,weight: 6),
         ],
       )));

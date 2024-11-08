@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/components/assets_components/asset_view_assets.dart';
+import 'package:flutter_application_2/components/assets_components/form_update.dart';
 import 'package:flutter_application_2/components/assets_components/list_tags.dart';
 import 'package:flutter_application_2/components/expensives_components/expensive_view.dart';
+import 'package:flutter_application_2/components/expensives_components/form_new_add.dart';
+import 'package:flutter_application_2/components/expensives_components/form_update.dart';
 import 'package:flutter_application_2/components/expensives_components/list_tags.dart';
 import 'package:flutter_application_2/controller/asset_controller.dart';
 import 'package:flutter_application_2/controller/tag_asset_controller.dart';
@@ -27,18 +30,18 @@ class _PanelListAState extends State<PanelListA> {
 
   AssetController _assetController = AssetController();
   TagAssetController _tagAssetController = TagAssetController();
-
+  int idAsset = 30;
   TextEditingController query = TextEditingController();
   List<Asset> response = [];
   var controller = 0;
-
-  final int userId = 4;
+  final int userId = 3;
  @override
   
-  void initState() {
+  initState() {
     super.initState();
     // Carregar despesas quando o widget é inicializado
     loadAssets();
+    
   }
 
 Future<void> loadAssets() async {
@@ -93,6 +96,7 @@ void getAssetsByQuery() {
     totalValue = filteredAssets.fold(0, (sum, asset) => sum + asset.valueD); // Atualiza o total
   });
 }
+
   
   Tag? selectedCategory;
 
@@ -111,7 +115,7 @@ void getAssetsByQuery() {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                 margin: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                  margin: EdgeInsets.fromLTRB(15, 5, 0, 5),
                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20), 
                   decoration: BoxDecoration(
                     border: Border.all(color: myWhite,width: 2),borderRadius: BorderRadius.circular(10) ),
@@ -188,17 +192,29 @@ void getAssetsByQuery() {
                         leading: PopupMenuButton(
                           iconColor: myWhite,
                           color: myWhite,
-                          onSelected: (value) {
+                          onSelected: (value) async {
                             if(value == "delete"){
-                             _assetController.delete(4, thisAsset.titleD);
-                            }  
+                             _assetController.delete(3, thisAsset.titleD);
                             setState(() {
                               response.remove(thisAsset);
                               totalValue = _assetController.totalAsset();                            
                               });
+                            }  
+                            if(value == "edit"){
+                             //_assetController.edit(thisAsset, idAsset);
+                             setState(() {
+                               
+                             });
+                            }  
+
                           },
                           itemBuilder: (BuildContext context){
-                            return const [
+                            return [
+                              PopupMenuItem(
+                                child: FormNewUpA(asset: thisAsset, id_asset: thisAsset.titleD),
+                                value: 'edit',
+                                height: 35,
+                              ),
                               PopupMenuItem(
                                 child: Text("Excluir"),
                                 value: 'delete',

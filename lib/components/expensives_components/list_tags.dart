@@ -32,7 +32,7 @@ class _ListTagState extends State<ListTag> {
   }
 
 void loadTags() async {
-  await _tagExpenseController.getTagByUserId(4); // Aguarda a conclusão
+  await _tagExpenseController.getTagByUserId(3); // Aguarda a conclusão
   setState(() {
     categoryList = _tagExpenseController.tagExpenseList; // Atualiza a lista após o carregamento
       colorChangeList = List<bool>.filled(categoryList.length, false);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/ui/colors.dart';
 
 class Tag {
   String titleC;
@@ -18,18 +19,7 @@ String colorToString(Color color) {
 }
 
   Color toColor() {
-    // Converte a string de cor em um objeto Color
-    switch (colorC.toLowerCase()) {
-      case 'red':
-        return Colors.red;
-      case 'blue':
-        return Colors.blue;
-      case 'green':
-        return Colors.green;
-      // Adicione mais cores conforme necessário
-      default:
-        return Colors.black; // Cor padrão se não for reconhecida
-    }
+    return colorsForChoice[0];
   }
 
   factory Tag.fromString(String title) {
