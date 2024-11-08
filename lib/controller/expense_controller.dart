@@ -226,7 +226,13 @@ Future<String> edit(Expense expense, String nome) async {
   dio.httpClientAdapter = adapter;
   int id;
   id = await getId(3, nome);
-  try {
+  print('ID: ${id}');  // You can replace 44 with the correct ID later
+  print('Data: $dataFormatada');
+  print('Valor: ${expense.valueD.toDouble()}');
+  print('Name: ${expense.titleD}');
+  print('Description: ${expense.descriptD}');
+  print('Category ID: ${expense.category!.titleC}');
+    try {
     print("idas" + id.toString());
     final response = await dio.put(
       url,

@@ -401,7 +401,7 @@ void initState() {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            ElevatedButton(onPressed: (){
+                            ElevatedButton(onPressed: () async {
                               if(chave.currentState!.validate()){
                                 var status;
                                   String? titulo = controllerTitle.text;
@@ -414,16 +414,18 @@ void initState() {
                                   String colorC; 
                                   String titleC = _dropdownSearchFieldController.text.trim();
                                   if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
-                                    colorC = getColorForTitle(titleC);
                                     tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                  } else {
-                                    colorC = Colors.red.toString(); // Converte a cor para String
-                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
-                                  }
+                                  print("ja tem");
+                                 }else{
+                                  print("nao tem");
+                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                 }
+                                  await _tagAssetController.createAssetTag(tag, 3);
+                                  print("nao tem");
                                   // creating expensive
-                                  Asset currentAsset = Asset(titulo, data, valor, descricao, "a", tag);
-                                  status = _assetController.createAsset(currentAsset, 3);
-                                  _tagAssetController.createAssetTag(tag,34);
+                                  Asset currentAsset = Asset(titulo, data, valor.toDouble(), descricao, "a", tag);
+                                  String result = await _assetController.createAsset(currentAsset, 3); // Passando o id do usuário como exemplo
+
                                   if(status == 'success'){
                                     print(status);
                                     sucess();     

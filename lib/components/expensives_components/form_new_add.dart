@@ -375,15 +375,15 @@ void initState() {
                                   //int i = Random().nextInt(7);
                                   String colorC; 
                                   String titleC = _dropdownSearchFieldController.text.trim();
-                                                                    tag = Tag(titleC, "blue"); // Cria a tag com cor em String
                                   if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
-                                    colorC = getColorForTitle(titleC);
                                     tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                  _tagExpenseController.createExpenseTag(tag, 3);
-
-                                  } else {
-                                  colorC = Colors.red.toString(); // Converte a cor para String
+                                  print("ja tem");
+                                 }else{
+                                  print("nao tem");
+                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
                                  }
+                                  await _tagExpenseController.createExpenseTag(tag, 3);
+                                  print("nao tem");
                                   // creating expensive
                                   Expense currentExpense = Expense(titulo, data, valor.toDouble(), descricao, "a", tag);
                                   String result = await _expenseController.createExpense(currentExpense, 3); // Passando o id do usuário como exemplo

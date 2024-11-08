@@ -21,12 +21,11 @@ Future<String> createAsset(Asset asset, int id_user) async {
 
     var url = '$baseUrl/create';
 
-      String dataString = asset.dateToRemember;
-      DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
-      DateTime data = formatoEntrada.parse(dataString);
-      
-      DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
-      String dataFormatada = formatoSaida.format(data);
+  String dataString = asset.dateToRemember;
+  
+  DateTime data = DateTime.parse(dataString); 
+  DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
+  String dataFormatada = formatoSaida.format(data);
 
     if(asset.dateToRemember == ""){
       dataFormatada = "2024-09-25";
@@ -47,7 +46,7 @@ Future<String> createAsset(Asset asset, int id_user) async {
         final response = await dio.post(
             url,
             data: jsonEncode(<String, dynamic>{
-                'data': dataFormatada,
+                'data': '2020/04/04',
                 'valor': asset.valueD.toDouble(),
                 'name': asset.titleD,
                 'description': asset.descriptD,

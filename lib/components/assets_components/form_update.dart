@@ -381,16 +381,19 @@ void initState() {
                                   //int i = Random().nextInt(7);
                                   String colorC; 
                                   String titleC = _dropdownSearchFieldController.text.trim();
+                                  if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
+                                    tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
+                                  print("ja tem");
+                                 }else{
+                                  print("nao tem");
                                   tag = Tag(titleC, "blue"); // Cria a tag com cor em String
-                                 // if (tags.map((tag) => tag.toLowerCase()).contains(titleC.toLowerCase())) {
-                                //    colorC = getColorForTitle(titleC);
-                                 //   tag = categoryList.firstWhere((tag) => tag.titleC == titleC);
-                                 // } else {
-                                    //colorC = Colors.red.toString(); // Converte a cor para String
-                                 // }
+                                 }
+                                  await _tagAssetController.createAssetTag(tag, 3);
+                                  print("nao tem");
                                   // creating expensive
-                                  Asset currentAsset = Asset(titulo, data, valor, descricao, "a", tag);
-                                  String result = await _assetController.edit(currentAsset, widget.id_asset!);
+                                  Asset currentAsset = Asset(titulo, data, valor.toDouble(), descricao, "a", tag);
+                                  String result = await _assetController.edit(currentAsset, widget.id_asset!); // Passando o id do usuário como exemplo
+
                                   if (result == 'success') {
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Despesa atualizada com sucesso!')));
                                   }
