@@ -21,7 +21,7 @@ Future<String> createExpenseTag(Tag tag, int id_user) async {
       url,
       data: jsonEncode(<String, dynamic>{
         'idUser': id_user.toInt(),
-        'color': tag.colorC, // Mantenha como string
+        'color': tag.colorC,
         'name': tag.titleC,
       }),
       options: Options(
@@ -58,11 +58,11 @@ Future<void> getTagByUserId(int id_user) async {
       print('Lista de tags: $tagExpenseList');
     } else {
       print('Erro na requisição: ${response.statusCode}');
-      tagExpenseList = []; // Certifique-se de limpar a lista em caso de erro
+      tagExpenseList = []; 
     }
   } catch (e) {
     print('Erro: $e');
-    tagExpenseList = []; // Limpe a lista em caso de exceção
+    tagExpenseList = [];
   }
 }
 

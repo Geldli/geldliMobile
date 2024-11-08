@@ -24,9 +24,9 @@ class _PanelGridState extends State<PanelGrid> {
       final List<dynamic> users = json.decode(response.body);
       if (users.isNotEmpty) {
         setState(() {
-          userId = users[0]['id'].toString(); // Supondo que o ID do usuário está no campo 'id'
+          userId = users[0]['id'].toString();
         });
-        print('User ID: $userId'); // Imprime o ID do usuário no console
+        print('User ID: $userId');
       } else {
         print('Nenhum usuário encontrado.');
       }

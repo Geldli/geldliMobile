@@ -87,14 +87,13 @@ Future<UserDetails?> login(String login, String pass) async {
 
 
     if (response.statusCode == 200 && control == true) {
-      // Se o login for bem-sucedido, chama o método para obter os detalhes do usuário
       return await getUserByLogin(login);
     } else {
-      return null; // Retorna null em caso de falha no login
+      return null;
     }
   } catch (e) {
     print('Erro: $e');
-    return null; // Retorna null em caso de exceção
+    return null;
   }
 }
 
@@ -110,7 +109,7 @@ Future<UserDetails?> testCookie() async {
     print(response);
   } catch (e) {
     print('Erro: $e');
-    return null; // Retorna null em caso de exceção
+    return null; 
   }
 
 }
@@ -132,16 +131,16 @@ Future<UserDetails?> getUserByLogin(String login) async {
             id: user['id'].toString(),
             nome: user['nome'],
             email: user['email'],
-          ); // Retorna os detalhes do usuário
+          ); 
         }
       }
-      return null; // Retorna null se não encontrar o usuário
+      return null; 
     } else {
-      return null; // Retorna null em caso de erro
+      return null; 
     }
   } catch (e) {
     print('Erro ao obter usuários: $e');
-    return null; // Retorna null em caso de exceção
+    return null; 
   }
 }
 }

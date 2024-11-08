@@ -102,8 +102,8 @@ Future<int> getId(int id_user, String title) async {
     if (response.statusCode == 200) {
       titleToIdList = (response.data as List)
           .map((expenseData) => toGetId(
-                id: expenseData['id'],    // Pegando o id da resposta
-                title: expenseData['nome'], // Pegando o nome (title) da resposta
+                id: expenseData['id'],    
+                title: expenseData['nome'], 
               ))
           .toList();
           
@@ -138,17 +138,16 @@ Future<void> delete(int id_user, String title) async {
         );
       }).toList();
 
-      // Procura o id correspondente ao title
       for (var element in idList) {
         if (element.title == title) {
           id = element.id;
-          break; // Encerra o loop ao encontrar o id
+          break; 
         }
       }
 
       if (id == null) {
         print("Título não encontrado.");
-        return; // Retorna se o título não foi encontrado
+        return; 
       }
     }
   } catch (e) {
@@ -156,7 +155,7 @@ Future<void> delete(int id_user, String title) async {
   }
 
   try {
-    var deleteUrl = '$baseUrl/delete/$id'; // Atualiza a URL com o id encontrado
+    var deleteUrl = '$baseUrl/delete/$id'; 
     final deleteResponse = await dio.delete(deleteUrl);
     if (deleteResponse.statusCode == 200) {
       print('Despesa excluída com sucesso.');
@@ -205,15 +204,15 @@ Future<String> edit(Expense expense, String nome) async {
 
   String dataString = expense.dateToRemember;
   
-  DateTime data = DateTime.parse(dataString); // Aqui usamos DateTime.parse() diretamente
+  DateTime data = DateTime.parse(dataString); 
   DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
   String dataFormatada = formatoSaida.format(data);
 
   if (expense.dateToRemember == "") {
-    dataFormatada = "2024-09-25"; // Fallback para uma data padrão caso a data esteja vazia
+    dataFormatada = "2024-09-25"; 
   }
   if (expense.descriptD == "") {
-    expense.descriptD = " "; // Se a descrição estiver vazia, atribui um valor padrão
+    expense.descriptD = " ";
   }
 
   print(expense.dateToRemember +
@@ -226,21 +225,15 @@ Future<String> edit(Expense expense, String nome) async {
   dio.httpClientAdapter = adapter;
   int id;
   id = await getId(3, nome);
-  print('ID: ${id}');  // You can replace 44 with the correct ID later
-  print('Data: $dataFormatada');
-  print('Valor: ${expense.valueD.toDouble()}');
-  print('Name: ${expense.titleD}');
-  print('Description: ${expense.descriptD}');
-  print('Category ID: ${expense.category!.titleC}');
     try {
     print("idas" + id.toString());
     final response = await dio.put(
       url,
       data: jsonEncode(<String, dynamic>{
-        'id': id, // Aqui você pode substituir pelo ID correto, se necessário
+        'id': id,
         'data': dataFormatada,
         'valor': expense.valueD.toDouble(),
-        'name': expense.titleD, // Substitua pelo nome correto
+        'name': expense.titleD,
         'description': expense.descriptD,
         'idCategory': expense.category!.titleC,
       }),

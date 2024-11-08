@@ -39,7 +39,6 @@ class _PanelListAState extends State<PanelListA> {
   
   initState() {
     super.initState();
-    // Carregar despesas quando o widget é inicializado
     loadAssets();
     
   }
@@ -51,7 +50,6 @@ Future<void> loadAssets() async {
         _assetController.assetList.forEach((element) {
           print(element.titleD);
         });
-     // Verifiq
       setState(() {
       response = _assetController.assetList;
       totalValue = _assetController.totalAsset();
@@ -68,17 +66,17 @@ void handleCategorySelected(Tag? selectedTag) async {
   List<Asset> filteredAssets = await _assetController.getByCategory(userId, selectedTag.titleC);
 
   setState(() {
-    this.selectedCategory = selectedTag; // Atualiza a categoria selecionada
-    response = filteredAssets; // Atualiza a lista de despesas para exibir apenas as filtradas
+    this.selectedCategory = selectedTag; 
+    response = filteredAssets; 
     totalValue = filteredAssets.fold(0, (sum, asset) => sum + asset.valueD);  });
 }
 
 
 void getAssetsByQuery() {
-  String searchQuery = query.text.trim(); // Remove espaços em branco
+  String searchQuery = query.text.trim(); 
 
   if (searchQuery.isEmpty) {
-    // Se a consulta estiver vazia, reseta a resposta para a lista completa
+   
     setState(() {
       response = List.from(_assetController.assetList);
       totalValue = _assetController.totalAsset();
@@ -86,13 +84,13 @@ void getAssetsByQuery() {
     return;
   }
 
-  // Filtra as despesas pela consulta
+  // 
   List<Asset> filteredAssets = _assetController.assetList.where((expensive) {
     return expensive.titleD.toUpperCase().contains(searchQuery.toUpperCase());
   }).toList();
 
   setState(() {
-    response = filteredAssets; // Atualiza a lista de despesas
+    response = filteredAssets; 
     totalValue = filteredAssets.fold(0, (sum, asset) => sum + asset.valueD); // Atualiza o total
   });
 }

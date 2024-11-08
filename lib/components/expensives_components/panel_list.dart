@@ -36,7 +36,6 @@ class _PanelListState extends State<PanelList> {
   
   initState() {
     super.initState();
-    // Carregar despesas quando o widget é inicializado
     loadExpenses();
     
   }
@@ -48,7 +47,6 @@ Future<void> loadExpenses() async {
         _expenseController.expenseList.forEach((element) {
           print(element.titleD);
         });
-     // Verifiq
       setState(() {
       response = _expenseController.expenseList;
       totalValue = _expenseController.totalExpensives();
@@ -65,17 +63,16 @@ void handleCategorySelected(Tag? selectedTag) async {
   List<Expense> filteredExpenses = await _expenseController.getByCategory(userId, selectedTag.titleC);
 
   setState(() {
-    this.selectedCategory = selectedTag; // Atualiza a categoria selecionada
-    response = filteredExpenses; // Atualiza a lista de despesas para exibir apenas as filtradas
+    this.selectedCategory = selectedTag;
+    response = filteredExpenses;
     totalValue = filteredExpenses.fold(0, (sum, expense) => sum + expense.valueD);  });
 }
 
 
 void getExpensivesByQuery() {
-  String searchQuery = query.text.trim(); // Remove espaços em branco
+  String searchQuery = query.text.trim(); 
 
   if (searchQuery.isEmpty) {
-    // Se a consulta estiver vazia, reseta a resposta para a lista completa
     setState(() {
       response = List.from(_expenseController.expenseList);
       totalValue = _expenseController.totalExpensives();
@@ -83,14 +80,13 @@ void getExpensivesByQuery() {
     return;
   }
 
-  // Filtra as despesas pela consulta
   List<Expense> filteredExpenses = _expenseController.expenseList.where((expensive) {
     return expensive.titleD.toUpperCase().contains(searchQuery.toUpperCase());
   }).toList();
 
   setState(() {
-    response = filteredExpenses; // Atualiza a lista de despesas
-    totalValue = filteredExpenses.fold(0, (sum, expense) => sum + expense.valueD); // Atualiza o total
+    response = filteredExpenses;
+    totalValue = filteredExpenses.fold(0, (sum, expense) => sum + expense.valueD); 
   });
 }
 

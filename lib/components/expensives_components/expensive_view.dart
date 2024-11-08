@@ -65,18 +65,12 @@ class _ExpensiveViewState extends State<ExpensiveView> {
                   child: Text(widget.thisExpensive.category!.titleC, style: categoryText)),
               ],
             ),
-           /* Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Frequência:", style: dialogH2),
-                Text(widget.thisExpensive.frequency!, style: dialogH3),
-              ],
-            ),*/
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Lembrete:", style: dialogH2),
-                Text(formattedDate, style: dialogH3), // Use a data formatada aqui
+                Text(formattedDate, style: dialogH3), 
               ],
             ),
             Row(

@@ -32,9 +32,9 @@ class _ListTagAState extends State<ListTagA> {
   }
 
 void loadTags() async {
-  await _tagAssetController.getTagByUserId(3); // Aguarda a conclusão
+  await _tagAssetController.getTagByUserId(3); 
   setState(() {
-    categoryList = _tagAssetController.tagAssetList; // Atualiza a lista após o carregamento
+    categoryList = _tagAssetController.tagAssetList; 
       colorChangeList = List<bool>.filled(categoryList.length, false);
       print("Tags carregadas: ${categoryList.length}");  
       
@@ -63,11 +63,9 @@ void loadTags() async {
                 child: ElevatedButton(
                   onPressed: (){
                     setState(() {
-                      // Deselect all buttons
                       for (int i = 0; i < colorChangeList.length; i++) {
                         colorChangeList[i] = false;
                       }
-                      // Select the current button
                       colorChangeList[index] = true;
                     });
                     widget.onCategorySelected(currentTag);

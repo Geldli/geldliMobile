@@ -26,9 +26,8 @@ class BarChartSample2State extends State<BarChartSample2> {
   void initState() {
     super.initState();
 
-    // Calcule o maior valor entre valoresAtivos e valoresDespesas
     double maiorValor = (valoresAtivos + valoresDespesas).reduce((a, b) => a > b ? a : b);
-    maxY = maiorValor; // Use diretamente o maior valor
+    maxY = maiorValor; 
 
     final items = List.generate(12, (index) {
       return makeGroupData(index, valoresAtivos[index], valoresDespesas[index]);
@@ -50,7 +49,7 @@ class BarChartSample2State extends State<BarChartSample2> {
             Expanded(
               child: BarChart(
                 BarChartData(
-                  maxY: maxY, // Defina maxY como o maior valor calculado
+                  maxY: maxY, 
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       getTooltipColor: ((group) {
@@ -81,7 +80,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 28,
-                        interval: maxY / 5, // Divida em 5 partes
+                        interval: maxY / 5,
                         getTitlesWidget: leftTitles,
                       ),
                     ),

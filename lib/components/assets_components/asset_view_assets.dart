@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, avoid_unnecessary_containers
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,9 +20,6 @@ class AssetView extends StatefulWidget {
 class _AssetViewState extends State<AssetView> {
   @override
   Widget build(BuildContext context) {
-
-    //DateFormat dateFormat = DateFormat('dd/MM/yy');
-   //String formattedDate = dateFormat.format(DateTime.parse(widget.thisAsset.dateToRemember));
 
     return AlertDialog(
       alignment: AlignmentDirectional.bottomEnd,
@@ -66,18 +63,12 @@ class _AssetViewState extends State<AssetView> {
                   child: Text(widget.thisAsset.category!.titleC, style: categoryText)),
               ],
             ),
-           /* Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Frequência:", style: dialogH2),
-                Text(widget.thisAsset.frequency!, style: dialogH3),
-              ],
-            ),*/
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Lembrete:", style: dialogH2),
-                Text(widget.thisAsset.dateToRemember, style: dialogH3), // Use a data formatada aqui
+                Text(widget.thisAsset.dateToRemember, style: dialogH3),
               ],
             ),
             Row(

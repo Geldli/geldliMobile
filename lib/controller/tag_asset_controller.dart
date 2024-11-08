@@ -21,7 +21,7 @@ Future<String> createAssetTag(Tag tag, int id_user) async {
       url,
       data: jsonEncode(<String, dynamic>{
         'idUser': id_user,
-        'color': tag.colorC, // Mantenha como string
+        'color': tag.colorC, 
         'name': tag.titleC,
       }),
       options: Options(
@@ -58,11 +58,11 @@ Future<void> getTagByUserId(int id_user) async {
       print('Lista de tags: $tagAssetList');
     } else {
       print('Erro na requisição: ${response.statusCode}');
-      tagAssetList = []; // Certifique-se de limpar a lista em caso de erro
+      tagAssetList = []; 
     }
   } catch (e) {
     print('Erro: $e');
-    tagAssetList = []; // Limpe a lista em caso de exceção
+    tagAssetList = []; 
   }
 }
 

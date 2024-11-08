@@ -34,6 +34,7 @@ class _FormNewUpState extends State<FormNewUp> {
   DateTime? selectedDate;
   final dateFormat = DateFormat('dd/MM/yyyy'); // Formato da data
 
+
   ExpenseController _expenseController = ExpenseController();
   TagExpenseController _tagExpenseController = TagExpenseController();
 
@@ -70,12 +71,12 @@ class _FormNewUpState extends State<FormNewUp> {
 
 
 void loadTags() async {
-  await _tagExpenseController.getTagByUserId(3); // Substitua pelo ID do usuário
+  await _tagExpenseController.getTagByUserId(3); 
   setState(() {
     categoryList = _tagExpenseController.tagExpenseList;
     print("opa" + categoryList.toString());
-    mapp.clear(); // Limpe o mapa antes de preenchê-lo novamente
-    tags.clear(); // Limpe a lista de tags antes de preenchê-la novamente
+    mapp.clear(); 
+    tags.clear(); 
     for (int i = 0; i < categoryList.length; i++) {
       mapp[categoryList[i].titleC] = categoryList[i].colorC;
       tags.add(categoryList[i].titleC);
@@ -315,18 +316,18 @@ void initState() {
               borderRadius: BorderRadius.circular(10),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: myDarkY, width: 2), // Altere a cor conforme necessário
+              borderSide: BorderSide(color: myDarkY, width: 2), 
               borderRadius: BorderRadius.circular(10),
             ),
             hintText: "Data",
-            hintStyle: formTextStyle, // Altere conforme necessário
+            hintStyle: formTextStyle, 
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             isCollapsed: true,
             filled: true,
-            fillColor: myBlack, // Altere conforme necessário
-            labelStyle: formTextStyle, // Altere conforme necessário
+            fillColor: myBlack,
+            labelStyle: formTextStyle,
           ),
-          readOnly: true, // Para que o teclado não apareça
+          readOnly: true, 
           controller: controllerDate,
           style: formTextStyle,
         ),
@@ -386,13 +387,13 @@ void initState() {
                                   print("ja tem");
                                  }else{
                                   print("nao tem");
-                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                  tag = Tag(titleC, "blue");
                                  }
                                   await _tagExpenseController.createExpenseTag(tag, 3);
                                   print("nao tem");
                                   // creating expensive
                                   Expense currentExpense = Expense(titulo, data, valor.toDouble(), descricao, "a", tag);
-                                  String result = await _expenseController.edit(currentExpense, widget.id_expense!); // Passando o id do usuário como exemplo
+                                  String result = await _expenseController.edit(currentExpense, widget.id_expense!); 
                                   if (result == 'success') {
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Despesa atualizada com sucesso!')));
                                   }

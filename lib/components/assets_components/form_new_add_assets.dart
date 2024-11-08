@@ -71,12 +71,12 @@ class _FormNewAState extends State<FormNewA> {
 
 
 void loadTags() async {
-  await _tagAssetController.getTagByUserId(4); // Substitua pelo ID do usuário
+  await _tagAssetController.getTagByUserId(4); 
   setState(() {
     categoryList = _tagAssetController.tagAssetList;
     print("opa" + categoryList.toString());
-    mapp.clear(); // Limpe o mapa antes de preenchê-lo novamente
-    tags.clear(); // Limpe a lista de tags antes de preenchê-la novamente
+    mapp.clear(); 
+    tags.clear();
     for (int i = 0; i < categoryList.length; i++) {
       mapp[categoryList[i].titleC] = categoryList[i].colorC;
       tags.add(categoryList[i].titleC);
@@ -311,18 +311,18 @@ void initState() {
               borderRadius: BorderRadius.circular(10),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: myDarkY, width: 2), // Altere a cor conforme necessário
+              borderSide: BorderSide(color: myDarkY, width: 2), 
               borderRadius: BorderRadius.circular(10),
             ),
             hintText: "Data",
-            hintStyle: formTextStyle, // Altere conforme necessário
+            hintStyle: formTextStyle, 
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             isCollapsed: true,
             filled: true,
-            fillColor: myBlack, // Altere conforme necessário
-            labelStyle: formTextStyle, // Altere conforme necessário
+            fillColor: myBlack, 
+            labelStyle: formTextStyle, 
           ),
-          readOnly: true, // Para que o teclado não apareça
+          readOnly: true, 
           controller: controllerDate,
           style: formTextStyle,
         ),
@@ -332,43 +332,6 @@ void initState() {
 
                         ],
                       ),
-            /*
-                        SizedBox(height: 10),
-      
-                        //FREQUENCIA input
-                        DropdownButtonFormField<String>(
-                          dropdownColor: myDarkY,
-                          elevation: 0,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                            filled: true,
-                            fillColor: myBlack,
-                            isCollapsed: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: myDarkY, width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),                          
-                          ),
-                          hint: Text('Frequência', style: hintForm,),
-                          value: _controllerFrequency,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _controllerFrequency = newValue!;
-                            });
-                          },
-                          items: <String>['Anualmente', 'Todo mês', 'Gasto único']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,style: formTextStyle),
-                            );
-                          }).toList()
-                        ),
-        */
                         SizedBox(height: 10),
       
                         //VALUE and Tag
@@ -418,13 +381,13 @@ void initState() {
                                   print("ja tem");
                                  }else{
                                   print("nao tem");
-                                  tag = Tag(titleC, "blue"); // Cria a tag com cor em String
+                                  tag = Tag(titleC, "blue"); 
                                  }
                                   await _tagAssetController.createAssetTag(tag, 3);
                                   print("nao tem");
                                   // creating expensive
                                   Asset currentAsset = Asset(titulo, data, valor.toDouble(), descricao, "a", tag);
-                                  String result = await _assetController.createAsset(currentAsset, 3); // Passando o id do usuário como exemplo
+                                  String result = await _assetController.createAsset(currentAsset, 3); 
 
                                   if(status == 'success'){
                                     print(status);

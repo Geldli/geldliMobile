@@ -137,17 +137,16 @@ Future<void> delete(int id_user, String title) async {
         );
       }).toList();
 
-      // Procura o id correspondente ao title
       for (var element in idList) {
         if (element.title == title) {
           id = element.id;
-          break; // Encerra o loop ao encontrar o id
+          break;
         }
       }
 
       if (id == null) {
         print("Título não encontrado.");
-        return; // Retorna se o título não foi encontrado
+        return;
       }
     }
   } catch (e) {
@@ -155,7 +154,7 @@ Future<void> delete(int id_user, String title) async {
   }
 
   try {
-    var deleteUrl = '$baseUrl/delete/$id'; // Atualiza a URL com o id encontrado
+    var deleteUrl = '$baseUrl/delete/$id';
     final deleteResponse = await dio.delete(deleteUrl);
     if (deleteResponse.statusCode == 200) {
       print('Despesa excluída com sucesso.');
@@ -204,15 +203,15 @@ Future<String> edit(Asset asset, String nome) async {
 
   String dataString = asset.dateToRemember;
   
-  DateTime data = DateTime.parse(dataString); // Aqui usamos DateTime.parse() diretamente
+  DateTime data = DateTime.parse(dataString); 
   DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
   String dataFormatada = formatoSaida.format(data);
 
   if (asset.dateToRemember == "") {
-    dataFormatada = "2024-09-25"; // Fallback para uma data padrão caso a data esteja vazia
+    dataFormatada = "2024-09-25";
   }
   if (asset.descriptD == "") {
-    asset.descriptD = " "; // Se a descrição estiver vazia, atribui um valor padrão
+    asset.descriptD = " "; 
   }
 
   print(asset.dateToRemember +
@@ -230,10 +229,10 @@ Future<String> edit(Asset asset, String nome) async {
     final response = await dio.put(
       url,
       data: jsonEncode(<String, dynamic>{
-        'id': id, // Aqui você pode substituir pelo ID correto, se necessário
+        'id': id,
         'data': dataFormatada,
         'valor': asset.valueD.toDouble(),
-        'name': asset.titleD, // Substitua pelo nome correto
+        'name': asset.titleD,
         'description': asset.descriptD,
         'idCategory': asset.category!.titleC,
       }),
